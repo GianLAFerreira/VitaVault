@@ -1,3 +1,19 @@
+# 1.0.1
+
+[07/04/2023]
+
+### Novas funcionalidades
+
+* [#PROG-5](https://trello.com/c/rLS93Xf2/1-prog-1) - Implementa as classes de modelo do projeto.
+
+### Melhorias
+
+* N/A.
+
+### Correções
+
+* N/A.
+
 # 1.0.0
 
 [05/04/2023]
