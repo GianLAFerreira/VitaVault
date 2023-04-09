@@ -11,9 +11,10 @@ public class Estoque {
 
     public void adicionarProduto(UUID id, ItemEstoque item) {
         if (itens == null) {
-            itens = new HashMap<UUID, ItemEstoque>();
+            itens = new HashMap<>();
         }
         itens.put(id, item);
+        System.out.println("Id do produto no estoque " + id);
     }
 
 
@@ -32,5 +33,9 @@ public class Estoque {
 
     public void setItens(Map<UUID, ItemEstoque> itens) {
         this.itens = itens;
+    }
+
+    public void vincularEstoqueAoItem(ItemEstoque itemEstoque, Estoque estoque) {
+        itemEstoque.setEstoque(estoque);
     }
 }

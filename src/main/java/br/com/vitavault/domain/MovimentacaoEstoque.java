@@ -18,8 +18,8 @@ public class MovimentacaoEstoque {
     private EnumTipoMovimentacao tipoMovimentacao;
     private Long quantidade;
 
-    public MovimentacaoEstoque(UUID id, ItemEstoque item, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade) {
-        this.id = id;
+    public MovimentacaoEstoque(ItemEstoque item, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade) {
+        this.id = UUID.randomUUID();
         this.item = item;
         this.funcionario = funcionario;
         this.alcada = alcada;
@@ -28,8 +28,34 @@ public class MovimentacaoEstoque {
         this.quantidade = quantidade;
     }
 
-    public void movimentarEntrada(Estoque estoque, Produto produto, ItemEstoque itemEstoque) {
+    public MovimentacaoEstoque(Produto produto, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade) {
+        this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), quantidade, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade);
+    }
+
+
+    public void movimentarEntrada(Produto produto, ItemEstoque itemEstoque, Long quantidade) {
+        Estoque estoque = new Estoque();
+        estoque.vincularEstoqueAoItem(itemEstoque, estoque);
+        //setarQuantidade(itemEstoque.getQuantidade(), quantidade, itemEstoque);
+        itemEstoque.setQuantidade(quantidade);
         estoque.adicionarProduto(produto.getId(), itemEstoque);
-        System.out.println("Movimentando entrada");
+        System.out.println("Id do produto no item estoque " + produto.getId());
+        System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
+    }
+
+    private void setarQuantidade(Long quantidadeEstoque, Long quantidadeAumentar, ItemEstoque itemEstoque) {
+        itemEstoque.setQuantidade(quantidadeEstoque + quantidadeAumentar);
+    }
+
+    public Long getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Long quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public ItemEstoque getItem() {
+        return item;
     }
 }
