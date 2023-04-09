@@ -32,7 +32,6 @@ public class MovimentacaoEstoque {
         this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), quantidade, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade);
     }
 
-
     public void movimentarEntrada(Produto produto, ItemEstoque itemEstoque, Long quantidade) {
         Estoque estoque = new Estoque();
         estoque.vincularEstoqueAoItem(itemEstoque, estoque);
