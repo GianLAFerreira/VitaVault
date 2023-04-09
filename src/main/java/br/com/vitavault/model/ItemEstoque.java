@@ -14,13 +14,15 @@ public class ItemEstoque {
     private Long quantidade;
     private EnumTipoMovimentacao tipoMovimentacao;
 
-    public ItemEstoque(UUID id, Produto produto, Estoque estoque, LocalDate data, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
+    public ItemEstoque(UUID id, Produto produto, LocalDate data, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
         this.id = id;
         this.produto = produto;
-        this.estoque = estoque;
         this.data = data;
         this.quantidade = quantidade;
         this.tipoMovimentacao = tipoMovimentacao;
+    }
+
+    public ItemEstoque() {
     }
 
     public UUID getId() {
