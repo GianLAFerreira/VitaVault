@@ -9,26 +9,33 @@ import main.java.br.com.vitavault.model.ProdutoNaoDepreciavel;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+import main.java.br.com.vitavault.model.Estoque;
+import main.java.br.com.vitavault.model.ItemEstoque;
 
 public class Main {
     public static void main(String[] args) {
 
         //cria o papel
         Papel papel = criarPapel();
+        
         //cria o funcionario
         Funcionario funcionarioGian = criarFuncionario(papel);
+        
         //cria o produto
         Produto produto = criarProduto();
-
-        //Adiciona o primeiro item o Estoque
-        //ItemEstoque itemTesteEstoque = new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 10L, EnumTipoMovimentacao.ENTRADA);
-
-
-        MovimentacaoEstoque movimentarEntrada = new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
-
-        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem().getProduto(), movimentarEntrada.getItem(), movimentarEntrada.getQuantidade());
-
-
+        Produto produto2 = criarProduto();
+        
+        //movimentação do estoque
+        MovimentacaoEstoque movimentarEntrada = new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);        
+        
+//        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem().getProduto(), movimentarEntrada.getItem(), movimentarEntrada.getQuantidade());;;;;;;;;
+        
+        Estoque estoque = new Estoque();
+        
+        estoque.adicionarProduto(produto.getId(), movimentarEntrada.getItem());
+        estoque.adicionarProduto(produto2.getId(), movimentarEntrada.getItem());
+        
+        estoque.listarProdutosEstoque();
     }
 
     private static Produto criarProduto() {
