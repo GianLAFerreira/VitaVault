@@ -1,8 +1,11 @@
 package br.com.vitavault.model;
 
 import br.com.vitavault.domain.EnumTipoMovimentacao;
+import br.com.vitavault.domain.MovimentacaoEstoque;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class ItemEstoque {
@@ -13,6 +16,7 @@ public class ItemEstoque {
     private LocalDate data;
     private Long quantidade;
     private EnumTipoMovimentacao tipoMovimentacao;
+    private List<MovimentacaoEstoque> movimentacao = new ArrayList<>();
 
     public ItemEstoque(UUID id, Produto produto, LocalDate data, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
         this.id = id;
@@ -71,5 +75,9 @@ public class ItemEstoque {
 
     public void setTipoMovimentacao(EnumTipoMovimentacao tipoMovimentacao) {
         this.tipoMovimentacao = tipoMovimentacao;
+    }
+
+    public List<MovimentacaoEstoque> getMovimentacao() {
+        return movimentacao;
     }
 }

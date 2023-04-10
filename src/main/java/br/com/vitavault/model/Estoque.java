@@ -7,12 +7,15 @@ import java.util.UUID;
 public class Estoque {
     private Map<UUID, ItemEstoque> itens;
 
-    public void adicionarProduto(UUID id, ItemEstoque item) {
+    public Estoque(Map<UUID, ItemEstoque> itens) {
+        this.itens = itens;
+    }
+
+    public void adicionarProdutoNoEstoque(UUID id, ItemEstoque item) {
         if (itens == null) {
             itens = new HashMap<>();
         }
         itens.put(id, item);
-        System.out.println("Id do produto no estoque " + id);
     }
 
     public void removerProduto(Produto produto, Long quantidade) {
@@ -47,7 +50,15 @@ public class Estoque {
         this.itens = itens;
     }
 
-    public void vincularEstoqueAoItem(ItemEstoque itemEstoque, Estoque estoque) {
-        itemEstoque.setEstoque(estoque);
+    public ItemEstoque vincularEstoqueAoItem(ItemEstoque itemEstoque, Estoque estoque) {
+        if (estoque.getItens().get(itemEstoque.getId()) == null) {
+            itemEstoque.setEstoque(estoque);
+            adicionarProdutoNoEstoque(itemEstoque.getId(), itemEstoque);
+            System.out.println("vinculou item ao estoque");
+            return estoque.getItens().get(itemEstoque.getId());
+        } else {
+            System.out.println("Ja existe o item no estoque");
+            return itemEstoque;
+        }
     }
 }
