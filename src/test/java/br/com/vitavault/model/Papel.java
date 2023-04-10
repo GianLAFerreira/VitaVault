@@ -1,6 +1,6 @@
-package main.java.br.com.vitavault.model;
+package br.com.vitavault.model;
 
-import main.java.br.com.vitavault.domain.EnumNivelAcesso;
+import br.com.vitavault.domain.EnumNivelAcesso;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
-package main.java.br.com.vitavault.model;
+package br.com.vitavault.model;
 
-import main.java.br.com.vitavault.controller.Login;
+import br.com.vitavault.controller.Login;
 
 import java.util.List;
 import java.util.UUID;

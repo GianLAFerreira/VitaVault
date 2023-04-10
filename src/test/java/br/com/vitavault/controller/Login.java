@@ -1,6 +1,6 @@
-package main.java.br.com.vitavault.controller;
+package br.com.vitavault.controller;
 
-import main.java.br.com.vitavault.model.Funcionario;
+import br.com.vitavault.model.Funcionario;
 
 public interface Login {
     void login(Funcionario funcionario);
