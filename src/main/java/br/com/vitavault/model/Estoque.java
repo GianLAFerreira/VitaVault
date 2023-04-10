@@ -21,10 +21,25 @@ public class Estoque {
     public void removerProduto(Produto produto, Long quantidade) {
         //#PROG-7 -implementar logica de adicionar produto
     }
+    
+    public void listarProdutosEstoque() {
+        if(!itens.isEmpty()) 
+            listagemProdutos();
+        else 
+            System.out.println("Não existem produtos para serem listados.");
+    }
 
-    public List<Produto> listar() {
-        //#PROG-8 -implementar logica de adicionar produto
-        return null;
+    private void listagemProdutos() {
+       for(Map.Entry<UUID, ItemEstoque> item : itens.entrySet()) {
+           String itemListagem = String.format("%nID do Produto: %s %nNome do Produto: %s %nDescrição do produto: %s %nQuantidade em Estoque: %d %nPreço Unitário: %f",
+                                           item.getKey(),
+                                           item.getValue().getProduto().getNome(),
+                                           item.getValue().getProduto().getDescricao(),
+                                           item.getValue().getQuantidade(),
+                                           item.getValue().getProduto().getPreco());
+           
+           System.out.println(itemListagem);
+       }
     }
 
     public Map<UUID, ItemEstoque> getItens() {
