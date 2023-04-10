@@ -5,6 +5,7 @@
 ### Novas funcionalidades
 
 * [#PROG-5](https://trello.com/c/rLS93Xf2/1-prog-1) - Implementa as classes de modelo do projeto.
+* [#PROG-10](https://trello.com/c/ZjtrJmWU/6-prog-10) - #PROG-10 - Implementa o processo de adicionar item ao estoque
 
 ### Melhorias
 

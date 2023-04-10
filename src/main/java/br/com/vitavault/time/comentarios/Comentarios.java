@@ -39,6 +39,28 @@ public class Comentarios {
             //movimentarSaida
         }
     }
+
+    R: A criação de uma classe que controla as movimentações do estoque em vez de fazer a movimentação direta do estoque tem várias vantagens.
+
+    Aqui estão algumas delas:
+
+    1. Separação de responsabilidades: A classe de movimentação de estoque é responsável apenas por controlar as movimentações do estoque,
+    enquanto a classe de estoque é responsável por gerenciar o estoque em si. Isso torna o código mais organizado e fácil de manter.
+
+    2. Flexibilidade: Quando você tem uma classe de movimentação de estoque, pode adicionar ou modificar diferentes tipos de movimentações
+    (por exemplo, movimentação de entrada, movimentação de saída, movimentação de transferência entre estoques) sem precisar
+    modificar a classe de estoque. Isso permite que o código seja mais flexível e extensível.
+
+    3. Validar movimentações: Ao ter uma classe de movimentação de estoque, você pode validar as movimentações antes de executá-las.
+    Por exemplo, verificar se há estoque suficiente para a movimentação solicitada, verificar se o produto existe no estoque,
+    entre outras validações. Essas verificações podem ser feitas na classe de movimentação antes de afetar o estoque, evitando erros ou inconsistências.
+
+    4. Histórico de movimentações: A classe de movimentação de estoque pode manter um registro histórico de todas as movimentações
+    feitas no estoque, com informações sobre o funcionário responsável, data da movimentação, tipo de movimentação,
+    quantidade movimentada, entre outras informações. Essas informações podem ser úteis para fins de auditoria, controle de estoque e análise de dados.
+
+    Em resumo, a criação de uma classe que controla as movimentações do estoque em vez de fazer a
+    movimentação direta do estoque pode tornar o código mais organizado, flexível, seguro e com informações históricas importantes.
     
     2 -
     Autora: Ariadne Cavilha Jorge
@@ -59,6 +81,8 @@ public class Comentarios {
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
     }
+
+    R: Mesmo caso da de cima
     */
 
 }

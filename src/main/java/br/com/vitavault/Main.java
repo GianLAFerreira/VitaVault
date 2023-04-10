@@ -11,6 +11,7 @@ import br.com.vitavault.model.ProdutoNaoDepreciavel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Main {
@@ -24,17 +25,31 @@ public class Main {
 
         //cria o produto
         Produto produto = criarProduto();
-        Produto produto2 = criarProduto();
+        Produto produto2 = criarProduto2();
 
         //movimentação do estoque
         MovimentacaoEstoque movimentarEntrada = new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
 
-//        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem().getProduto(), movimentarEntrada.getItem(), movimentarEntrada.getQuantidade());;;;;;;;;
+        //movimentação do estoque
+        MovimentacaoEstoque movimentarEntrada2 = new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
 
-        Estoque estoque = new Estoque();
 
-        estoque.adicionarProduto(produto.getId(), movimentarEntrada.getItem());
-        estoque.adicionarProduto(produto2.getId(), movimentarEntrada.getItem());
+        Estoque estoque = new Estoque(new HashMap<>());
+
+        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), movimentarEntrada.getQuantidade(), estoque);
+
+
+        System.out.println("--------------------fim da primeira inclusão--------------");
+
+
+        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), 5L, estoque);
+
+
+        System.out.println("--------------------fim da segunda inclusão--------------");
+
+        movimentarEntrada2.movimentarEntrada(movimentarEntrada2.getItem(), 25L, estoque);
+
+        System.out.println("--------------------fim da inclusão item 2--------------");
 
         estoque.listarProdutosEstoque();
     }
@@ -42,6 +57,11 @@ public class Main {
     private static Produto criarProduto() {
         return new ProdutoNaoDepreciavel(UUID.randomUUID(), 1, "Teste",
                 "Produto criado para teste", new BigDecimal("100.00"), "Dentista", true);
+    }
+
+    private static Produto criarProduto2() {
+        return new ProdutoNaoDepreciavel(UUID.randomUUID(), 2, "teste2",
+                "Produto criado para teste 2", new BigDecimal("200.00"), "A definir", true);
     }
 
     private static Funcionario criarFuncionario(Papel papel) {
