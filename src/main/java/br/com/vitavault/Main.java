@@ -1,3 +1,5 @@
+package br.com.vitavault;
+
 import br.com.vitavault.domain.EnumNivelAcesso;
 import br.com.vitavault.domain.EnumTipoMovimentacao;
 import br.com.vitavault.domain.MovimentacaoEstoque;
