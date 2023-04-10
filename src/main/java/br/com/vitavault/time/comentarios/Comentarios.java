@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package br.com.vivavault.time.comentarios;
+package br.com.vitavault.time.comentarios;
 
 /**
  * Classe voltada para adicionar comentários referente aos códigos, utilizada para sugestões de desenvolvimento ou possíveis dúvidas. Utilizando essa classe,

@@ -1,13 +1,11 @@
-package main.java.br.com.vitavault.model;
+package br.com.vitavault.model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class Estoque {
     private Map<UUID, ItemEstoque> itens;
-
 
     public void adicionarProduto(UUID id, ItemEstoque item) {
         if (itens == null) {
@@ -17,29 +15,28 @@ public class Estoque {
         System.out.println("Id do produto no estoque " + id);
     }
 
-
     public void removerProduto(Produto produto, Long quantidade) {
         //#PROG-7 -implementar logica de adicionar produto
     }
-    
+
     public void listarProdutosEstoque() {
-        if(!itens.isEmpty()) 
+        if (!itens.isEmpty())
             listagemProdutos();
-        else 
+        else
             System.out.println("Não existem produtos para serem listados.");
     }
 
     private void listagemProdutos() {
-       for(Map.Entry<UUID, ItemEstoque> item : itens.entrySet()) {
-           String itemListagem = String.format("%nID do Produto: %s %nNome do Produto: %s %nDescrição do produto: %s %nQuantidade em Estoque: %d %nPreço Unitário: %f",
-                                           item.getKey(),
-                                           item.getValue().getProduto().getNome(),
-                                           item.getValue().getProduto().getDescricao(),
-                                           item.getValue().getQuantidade(),
-                                           item.getValue().getProduto().getPreco());
-           
-           System.out.println(itemListagem);
-       }
+        for (Map.Entry<UUID, ItemEstoque> item : itens.entrySet()) {
+            String itemListagem = String.format("%nID do Produto: %s %nNome do Produto: %s %nDescrição do produto: %s %nQuantidade em Estoque: %d %nPreço Unitário: %f",
+                    item.getKey(),
+                    item.getValue().getProduto().getNome(),
+                    item.getValue().getProduto().getDescricao(),
+                    item.getValue().getQuantidade(),
+                    item.getValue().getProduto().getPreco());
+
+            System.out.println(itemListagem);
+        }
     }
 
     public Map<UUID, ItemEstoque> getItens() {
