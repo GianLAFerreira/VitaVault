@@ -1,25 +1,23 @@
-package main.java.br.com.vitavault.domain;
+package br.com.vitavault.domain;
 
-import main.java.br.com.vitavault.model.Estoque;
-import main.java.br.com.vitavault.model.Funcionario;
-import main.java.br.com.vitavault.model.ItemEstoque;
-import main.java.br.com.vitavault.model.Papel;
-import main.java.br.com.vitavault.model.Produto;
+import br.com.vitavault.model.Estoque;
+import br.com.vitavault.model.Funcionario;
+import br.com.vitavault.model.ItemEstoque;
+import br.com.vitavault.model.Papel;
+import br.com.vitavault.model.Produto;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class MovimentacaoEstoque {
-        private UUID id;
-        private ItemEstoque item;
-        private Funcionario funcionario;
-        private Papel alcada;
-        private LocalDate dataMovimentacao;
-        private EnumTipoMovimentacao tipoMovimentacao;
-        private Long quantidade;
-        private Estoque estoque;
+    private UUID id;
+    private ItemEstoque item;
+    private Funcionario funcionario;
+    private Papel alcada;
+    private LocalDate dataMovimentacao;
+    private EnumTipoMovimentacao tipoMovimentacao;
+    private Long quantidade;
+    private Estoque estoque;
 
     /*
         Autora: Ariadne Cavilha Jorge
@@ -33,25 +31,24 @@ public class MovimentacaoEstoque {
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
     }
-    
+
     public MovimentacaoEstoque(Produto produto, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade) {
         this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), quantidade, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade);
     }
-    
+
     /*
         Autora: Ariadne Cavilha Jorge
     */
     public void adicionaMovimentacao(EnumTipoMovimentacao tipoMovimentacao, Produto produto, ItemEstoque itemEstoque, Long quantidade) {
         Estoque estoque = new Estoque();
-        
-        if(tipoMovimentacao == EnumTipoMovimentacao.ENTRADA) {
+
+        if (tipoMovimentacao == EnumTipoMovimentacao.ENTRADA) {
             movimentarEntrada(produto, itemEstoque, quantidade, estoque);
-        } 
-        else {
+        } else {
             // implementar o método movimentarSaida
         }
     }
-    
+
     private void movimentarEntrada(Produto produto, ItemEstoque itemEstoque, Long quantidade, Estoque estoque) {
         estoque.vincularEstoqueAoItem(itemEstoque, estoque);
         setEstoque(estoque);
@@ -77,11 +74,11 @@ public class MovimentacaoEstoque {
     public ItemEstoque getItem() {
         return item;
     }
-    
+
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
     }
-    
+
     public void listarProdutosEstoque() {
         estoque.listarProdutosEstoque();
     }

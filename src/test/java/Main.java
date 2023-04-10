@@ -1,40 +1,39 @@
-import main.java.br.com.vitavault.domain.EnumNivelAcesso;
-import main.java.br.com.vitavault.domain.EnumTipoMovimentacao;
-import main.java.br.com.vitavault.domain.MovimentacaoEstoque;
-import main.java.br.com.vitavault.model.Funcionario;
-import main.java.br.com.vitavault.model.Papel;
-import main.java.br.com.vitavault.model.Produto;
-import main.java.br.com.vitavault.model.ProdutoNaoDepreciavel;
+import br.com.vitavault.domain.EnumNivelAcesso;
+import br.com.vitavault.domain.EnumTipoMovimentacao;
+import br.com.vitavault.domain.MovimentacaoEstoque;
+import br.com.vitavault.model.Estoque;
+import br.com.vitavault.model.Funcionario;
+import br.com.vitavault.model.Papel;
+import br.com.vitavault.model.Produto;
+import br.com.vitavault.model.ProdutoNaoDepreciavel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
-import main.java.br.com.vitavault.model.Estoque;
-import main.java.br.com.vitavault.model.ItemEstoque;
 
 public class Main {
     public static void main(String[] args) {
 
         //cria o papel
         Papel papel = criarPapel();
-        
+
         //cria o funcionario
         Funcionario funcionarioGian = criarFuncionario(papel);
-        
+
         //cria o produto
         Produto produto = criarProduto();
         Produto produto2 = criarProduto();
-        
+
         //movimentação do estoque
-        MovimentacaoEstoque movimentarEntrada = new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);        
-        
+        MovimentacaoEstoque movimentarEntrada = new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
+
 //        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem().getProduto(), movimentarEntrada.getItem(), movimentarEntrada.getQuantidade());;;;;;;;;
-        
+
         Estoque estoque = new Estoque();
-        
+
         estoque.adicionarProduto(produto.getId(), movimentarEntrada.getItem());
         estoque.adicionarProduto(produto2.getId(), movimentarEntrada.getItem());
-        
+
         estoque.listarProdutosEstoque();
     }
 

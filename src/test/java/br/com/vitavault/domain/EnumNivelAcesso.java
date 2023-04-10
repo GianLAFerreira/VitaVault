@@ -1,4 +1,4 @@
-package main.java.br.com.vitavault.domain;
+package br.com.vitavault.domain;
 
 public enum EnumNivelAcesso {
 

@@ -5,12 +5,11 @@
 package br.com.vivavault.time.comentarios;
 
 /**
- *
- * Classe voltada para adicionar comentários referente aos códigos, utilizada para sugestões de desenvolvimento ou possíveis dúvidas. Utilizando essa classe, 
+ * Classe voltada para adicionar comentários referente aos códigos, utilizada para sugestões de desenvolvimento ou possíveis dúvidas. Utilizando essa classe,
  * iremos deixar o nosso código mais limpo para as implementações e podemos nos comunicar de uma forma mais clara.
  * Lembrando que os comentários nos códigos ainda podem ser incluídos, uma vez que facilita o nosso desenvolvimento, principalmente se um método não foi inteiramente implementado então
  * você poderá colocar o que falta para ser implementado, por exemplo.
- * 
+ * <p>
  * GUIA DE CRIAÇÃO DE COMENTÁRIOS:
  * -- Número da Dúvida (Seguir o padrão)
  * -- Autor(a)
@@ -61,5 +60,5 @@ public class Comentarios {
         this.quantidade = quantidade;
     }
     */
-    
+
 }

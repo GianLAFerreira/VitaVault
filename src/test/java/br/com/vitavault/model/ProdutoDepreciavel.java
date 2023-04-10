@@ -1,4 +1,4 @@
-package main.java.br.com.vitavault.model;
+package br.com.vitavault.model;
 
 import java.math.BigDecimal;
 import java.util.Date;

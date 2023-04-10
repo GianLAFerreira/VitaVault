@@ -1,6 +1,6 @@
-package main.java.br.com.vitavault.model;
+package br.com.vitavault.model;
 
-import main.java.br.com.vitavault.domain.EnumTipoMovimentacao;
+import br.com.vitavault.domain.EnumTipoMovimentacao;
 
 import java.time.LocalDate;
 import java.util.UUID;
