@@ -5,7 +5,12 @@
 ### Novas funcionalidades
 
 * [#PROG-5](https://trello.com/c/rLS93Xf2/1-prog-1) - Implementa as classes de modelo do projeto.
+<<<<<<< Updated upstream
 * [#PROG-10](https://trello.com/c/ZjtrJmWU/6-prog-10) - #PROG-10 - Implementa o processo de adicionar item ao estoque
+=======
+* [#PROG-10](https://trello.com/c/ZjtrJmWU/6-prog-10) - Implementa o processo de adicionar item ao estoque
+* [#PROG-14](https://trello.com/c/wERWYwpZ/12-prog-14) - Ajusta o projeto para trabalhar com a injeção de dependencia
+>>>>>>> Stashed changes
 
 ### Melhorias
 

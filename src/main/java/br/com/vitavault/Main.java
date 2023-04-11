@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class Main {
+
+
     public static void main(String[] args) {
+
 
         //cria o papel
         Papel papel = criarPapel();
@@ -26,11 +29,19 @@ public class Main {
         //cria o produto
         Produto produto = criarProduto();
         Produto produto2 = criarProduto2();
+<<<<<<< Updated upstream
+=======
+
+        //Cria um estoque
+        Estoque estoque = new Estoque(new HashMap<>());
+>>>>>>> Stashed changes
 
         //movimentação do estoque
-        MovimentacaoEstoque movimentarEntrada = new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
+        MovimentacaoEstoque movimentarEntrada =
+                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
 
         //movimentação do estoque
+<<<<<<< Updated upstream
         MovimentacaoEstoque movimentarEntrada2 = new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
 
 
@@ -50,8 +61,30 @@ public class Main {
         movimentarEntrada2.movimentarEntrada(movimentarEntrada2.getItem(), 25L, estoque);
 
         System.out.println("--------------------fim da inclusão item 2--------------");
+=======
+        MovimentacaoEstoque movimentarEntrada2 =
+                new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
 
-        estoque.listarProdutosEstoque();
+
+        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), movimentarEntrada.getQuantidade());
+>>>>>>> Stashed changes
+
+
+        System.out.println("--------------------fim da primeira inclusão--------------");
+
+
+        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), 5L);
+
+
+        System.out.println("--------------------fim da segunda inclusão--------------");
+
+        movimentarEntrada2.movimentarEntrada(movimentarEntrada2.getItem(), 25L);
+
+        System.out.println("--------------------fim da inclusão item 2--------------");
+
+        movimentarEntrada2.getEstoque().listarProdutosEstoque();
+
+        System.out.println("--------listagem----------");
     }
 
     private static Produto criarProduto() {
