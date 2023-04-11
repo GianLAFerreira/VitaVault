@@ -17,12 +17,13 @@ public class MovimentacaoEstoque {
     private LocalDate dataMovimentacao;
     private EnumTipoMovimentacao tipoMovimentacao;
     private Long quantidade;
-    // private Estoque estoque;
+    private final Estoque estoque;
 
     /*
         Autora: Ariadne Cavilha Jorge
     */
-    public MovimentacaoEstoque(ItemEstoque item, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade) {
+    private MovimentacaoEstoque(ItemEstoque item, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
+        this.estoque = estoque;
         this.id = UUID.randomUUID();
         this.item = item;
         this.funcionario = funcionario;
@@ -32,8 +33,8 @@ public class MovimentacaoEstoque {
         this.quantidade = quantidade;
     }
 
-    public MovimentacaoEstoque(Produto produto, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade) {
-        this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade);
+    public MovimentacaoEstoque(Produto produto, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
+        this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
     }
 
     /*
@@ -49,8 +50,8 @@ public class MovimentacaoEstoque {
         }
     }
 
-    public void movimentarEntrada(ItemEstoque itemEstoque, Long quantidade, Estoque estoque) {
-        itemEstoque = estoque.vincularEstoqueAoItem(itemEstoque, estoque);
+    public void movimentarEntrada(ItemEstoque itemEstoque, Long quantidade) {
+        itemEstoque = estoque.vincularEstoqueAoItem(itemEstoque, this.estoque);
 
         vincularMovimentacaoAoItem(itemEstoque);
         setarQuantidade(itemEstoque, quantidade);
