@@ -33,32 +33,12 @@ public class ItemEstoque {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public Produto getProduto() {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public Estoque getEstoque() {
-        return estoque;
-    }
-
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
     }
 
     public Long getQuantidade() {
@@ -67,14 +47,6 @@ public class ItemEstoque {
 
     public void setQuantidade(Long quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public EnumTipoMovimentacao getTipoMovimentacao() {
-        return tipoMovimentacao;
-    }
-
-    public void setTipoMovimentacao(EnumTipoMovimentacao tipoMovimentacao) {
-        this.tipoMovimentacao = tipoMovimentacao;
     }
 
     public List<MovimentacaoEstoque> getMovimentacao() {

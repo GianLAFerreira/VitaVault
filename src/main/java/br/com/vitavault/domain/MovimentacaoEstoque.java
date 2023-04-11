@@ -37,55 +37,53 @@ public class MovimentacaoEstoque {
         this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
     }
 
-    /*
-        Autora: Ariadne Cavilha Jorge
-    */
-    public void adicionaMovimentacao(EnumTipoMovimentacao tipoMovimentacao, Produto produto, ItemEstoque itemEstoque, Long quantidade) {
-        //Estoque estoque = new Estoque();
-
-        if (tipoMovimentacao == EnumTipoMovimentacao.ENTRADA) {
-            //  movimentarEntrada(produto, itemEstoque, quantidade, estoque);
+    public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
+        if (tipoMovimentacao.equals(EnumTipoMovimentacao.ENTRADA)) {
+            movimentarEntrada(itemEstoque, quantidade);
+            System.out.println("Id do item estoque " + itemEstoque.getId());
+            System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
         } else {
-            // implementar o método movimentarSaida
+            movimentarSaida(itemEstoque, quantidade);
+            System.out.println("Id do item estoque " + itemEstoque.getId());
+            System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
         }
     }
 
     public void movimentarEntrada(ItemEstoque itemEstoque, Long quantidade) {
-        itemEstoque = estoque.vincularEstoqueAoItem(itemEstoque, this.estoque);
+        itemEstoque = estoque.vincularEstoqueAoItem(itemEstoque);
 
         vincularMovimentacaoAoItem(itemEstoque);
-        setarQuantidade(itemEstoque, quantidade);
+        aumentarQuantidadeItemEstoque(itemEstoque, quantidade);
+    }
 
+    public void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) {
+        itemEstoque = estoque.buscarItem(itemEstoque);
 
-        System.out.println("Id do item estoque " + itemEstoque.getId());
-        System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
+        vincularMovimentacaoAoItem(itemEstoque);
+        diminuirQuantidadeItemEstoque(itemEstoque, quantidade);
     }
 
     private void vincularMovimentacaoAoItem(ItemEstoque itemEstoque) {
         itemEstoque.getMovimentacao().add(this);
     }
 
-    private void setarQuantidade(ItemEstoque itemEstoque, Long quantidadeAumentar) {
+    private void aumentarQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) {
         itemEstoque.setQuantidade(itemEstoque.getQuantidade() + quantidadeAumentar);
     }
 
-    public Long getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Long quantidade) {
-        this.quantidade = quantidade;
+    private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) {
+        itemEstoque.setQuantidade(itemEstoque.getQuantidade() - quantidadeAumentar);
     }
 
     public ItemEstoque getItem() {
         return item;
     }
 
-//    public void setEstoque(Estoque estoque) {
-//        this.estoque = estoque;
-//    }
+    public Long getQuantidade() {
+        return quantidade;
+    }
 
-//    public void listarProdutosEstoque() {
-//        estoque.listarProdutosEstoque();
-//    }
+    public EnumTipoMovimentacao getTipoMovimentacao() {
+        return tipoMovimentacao;
+    }
 }

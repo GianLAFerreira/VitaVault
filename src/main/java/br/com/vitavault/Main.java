@@ -34,27 +34,36 @@ public class Main {
         MovimentacaoEstoque movimentarEntrada =
                 new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
 
-        //movimentação do estoque
         MovimentacaoEstoque movimentarEntrada2 =
-                new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
+                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 5L, estoque);
+
+        MovimentacaoEstoque movimentarEntrada3 =
+                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.SAIDA, 3L, estoque);
+
+//        //movimentação do estoque
+//        MovimentacaoEstoque movimentarEntrada2 =
+//                new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
+//
+//        ItemEstoque itemEstoque = new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 100L, EnumTipoMovimentacao.SAIDA);
 
 
-        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), movimentarEntrada.getQuantidade());
+        movimentarEntrada.movimentarEstoque(movimentarEntrada.getItem(), movimentarEntrada.getQuantidade(), movimentarEntrada2.getTipoMovimentacao());
 
 
-        System.out.println("--------------------fim da primeira inclusão--------------");
+        System.out.println("--------------------cria entrada--------------");
 
 
-        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), 5L);
+        movimentarEntrada2.movimentarEstoque(movimentarEntrada.getItem(), movimentarEntrada2.getQuantidade(), movimentarEntrada2.getTipoMovimentacao());
 
 
-        System.out.println("--------------------fim da segunda inclusão--------------");
+        System.out.println("--------------------cria entrada 2--------------");
 
-        movimentarEntrada2.movimentarEntrada(movimentarEntrada2.getItem(), 25L);
+//        movimentarEntrada2.movimentarEntrada(movimentarEntrada2.getItem(), 25L);
+//
+//        System.out.println("--------------------fim da inclusão item 2--------------");
 
-        System.out.println("--------------------fim da inclusão item 2--------------");
-
-        estoque.listarProdutosEstoque();
+        movimentarEntrada3.movimentarEstoque(movimentarEntrada.getItem(), movimentarEntrada3.getQuantidade(), movimentarEntrada3.getTipoMovimentacao());
+        System.out.println("--------------------saida do entrada--------------");
     }
 
     private static Produto criarProduto() {
