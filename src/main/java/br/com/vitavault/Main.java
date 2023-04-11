@@ -27,27 +27,30 @@ public class Main {
         Produto produto = criarProduto();
         Produto produto2 = criarProduto2();
 
-        //movimentação do estoque
-        MovimentacaoEstoque movimentarEntrada = new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
-
-        //movimentação do estoque
-        MovimentacaoEstoque movimentarEntrada2 = new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L);
-
-
+        //Cria um estoque
         Estoque estoque = new Estoque(new HashMap<>());
 
-        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), movimentarEntrada.getQuantidade(), estoque);
+        //movimentação do estoque
+        MovimentacaoEstoque movimentarEntrada =
+                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
+
+        //movimentação do estoque
+        MovimentacaoEstoque movimentarEntrada2 =
+                new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
+
+
+        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), movimentarEntrada.getQuantidade());
 
 
         System.out.println("--------------------fim da primeira inclusão--------------");
 
 
-        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), 5L, estoque);
+        movimentarEntrada.movimentarEntrada(movimentarEntrada.getItem(), 5L);
 
 
         System.out.println("--------------------fim da segunda inclusão--------------");
 
-        movimentarEntrada2.movimentarEntrada(movimentarEntrada2.getItem(), 25L, estoque);
+        movimentarEntrada2.movimentarEntrada(movimentarEntrada2.getItem(), 25L);
 
         System.out.println("--------------------fim da inclusão item 2--------------");
 
