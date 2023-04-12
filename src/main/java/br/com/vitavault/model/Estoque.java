@@ -1,5 +1,7 @@
 package br.com.vitavault.model;
 
+import br.com.vitavault.exceptions.EstoqueException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -62,11 +64,10 @@ public class Estoque {
         }
     }
 
-    public ItemEstoque buscarItem(ItemEstoque itemEstoque) {
+    public ItemEstoque buscarItem(ItemEstoque itemEstoque) throws Exception {
         if (this.itens.get(itemEstoque.getId()) == null) {
 
-            System.out.println("O item não existe no estoque");
-            return null;
+            throw  new EstoqueException("O item: " + itemEstoque.getProduto().getNome() + " não existe no estoque");
         } else {
             System.out.println("O item existe no estoque");
             return this.itens.get(itemEstoque.getId());
