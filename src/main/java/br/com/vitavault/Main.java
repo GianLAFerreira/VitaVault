@@ -3,19 +3,17 @@ package br.com.vitavault;
 import br.com.vitavault.domain.EnumNivelAcesso;
 import br.com.vitavault.domain.EnumTipoMovimentacao;
 import br.com.vitavault.domain.MovimentacaoEstoque;
-import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.Funcionario;
-import br.com.vitavault.model.Papel;
-import br.com.vitavault.model.Produto;
-import br.com.vitavault.model.ProdutoNaoDepreciavel;
+import br.com.vitavault.model.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         //cria o papel
         Papel papel = criarPapel();
@@ -38,13 +36,11 @@ public class Main {
                 new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 5L, estoque);
 
         MovimentacaoEstoque movimentarEntrada3 =
-                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.SAIDA, 3L, estoque);
+                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.SAIDA, 300L, estoque);
 
-//        //movimentação do estoque
-//        MovimentacaoEstoque movimentarEntrada2 =
-//                new MovimentacaoEstoque(produto2, funcionarioGian, papel, LocalDate.now(), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
-//
-//        ItemEstoque itemEstoque = new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 100L, EnumTipoMovimentacao.SAIDA);
+        // -> chama erro que não existe no estoque
+//        ItemEstoque itemEstoque = new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 3L, EnumTipoMovimentacao.SAIDA);
+//        movimentarEntrada.movimentarEstoque(itemEstoque, 50L, EnumTipoMovimentacao.SAIDA);
 
 
         movimentarEntrada.movimentarEstoque(movimentarEntrada.getItem(), movimentarEntrada.getQuantidade(), movimentarEntrada2.getTipoMovimentacao());

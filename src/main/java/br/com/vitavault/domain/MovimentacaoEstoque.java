@@ -1,5 +1,6 @@
 package br.com.vitavault.domain;
 
+import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
 import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.Funcionario;
 import br.com.vitavault.model.ItemEstoque;
@@ -19,9 +20,6 @@ public class MovimentacaoEstoque {
     private Long quantidade;
     private final Estoque estoque;
 
-    /*
-        Autora: Ariadne Cavilha Jorge
-    */
     private MovimentacaoEstoque(ItemEstoque item, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
         this.estoque = estoque;
         this.id = UUID.randomUUID();
@@ -37,7 +35,7 @@ public class MovimentacaoEstoque {
         this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
     }
 
-    public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
+    public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) throws Exception {
         if (tipoMovimentacao.equals(EnumTipoMovimentacao.ENTRADA)) {
             movimentarEntrada(itemEstoque, quantidade);
             System.out.println("Id do item estoque " + itemEstoque.getId());
@@ -49,14 +47,14 @@ public class MovimentacaoEstoque {
         }
     }
 
-    public void movimentarEntrada(ItemEstoque itemEstoque, Long quantidade) {
+    private void movimentarEntrada(ItemEstoque itemEstoque, Long quantidade) {
         itemEstoque = estoque.vincularEstoqueAoItem(itemEstoque);
 
         vincularMovimentacaoAoItem(itemEstoque);
         aumentarQuantidadeItemEstoque(itemEstoque, quantidade);
     }
 
-    public void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) {
+    private void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) throws Exception {
         itemEstoque = estoque.buscarItem(itemEstoque);
 
         vincularMovimentacaoAoItem(itemEstoque);
@@ -71,8 +69,12 @@ public class MovimentacaoEstoque {
         itemEstoque.setQuantidade(itemEstoque.getQuantidade() + quantidadeAumentar);
     }
 
-    private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) {
-        itemEstoque.setQuantidade(itemEstoque.getQuantidade() - quantidadeAumentar);
+    private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) throws Exception {
+        if (itemEstoque.getQuantidade().compareTo(quantidadeAumentar) >= 0){
+            itemEstoque.setQuantidade(itemEstoque.getQuantidade() - quantidadeAumentar);
+        } else {
+            throw new MovimentacaoEstoqueException("Saldo insuficiente");
+        }
     }
 
     public ItemEstoque getItem() {
