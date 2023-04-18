@@ -29,3 +29,5 @@ bin/
 ### Mac OS ###
 .DS_Store
 /target/
+/Testes/nbproject/private/
+/Testes/build/

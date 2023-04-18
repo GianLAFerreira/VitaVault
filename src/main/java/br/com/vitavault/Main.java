@@ -60,6 +60,7 @@ public class Main {
 
         movimentarEntrada3.movimentarEstoque(movimentarEntrada.getItem(), movimentarEntrada3.getQuantidade(), movimentarEntrada3.getTipoMovimentacao());
         System.out.println("--------------------saida do entrada--------------");
+        
     }
 
     private static Produto criarProduto() {
