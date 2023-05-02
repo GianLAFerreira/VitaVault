@@ -52,4 +52,8 @@ public class ItemEstoque {
     public List<MovimentacaoEstoque> getMovimentacao() {
         return movimentacao;
     }
+
+    public LocalDate getData() {
+        return data;
+    }
 }
