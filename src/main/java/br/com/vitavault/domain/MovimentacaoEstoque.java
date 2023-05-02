@@ -32,7 +32,7 @@ public class MovimentacaoEstoque {
     }
 
     public MovimentacaoEstoque(Produto produto, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
-        this(new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
+        this(new ItemEstoque(UUID.randomUUID(), produto, dataMovimentacao, 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
     }
 
     public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) throws Exception {
@@ -57,8 +57,35 @@ public class MovimentacaoEstoque {
     private void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) throws Exception {
         itemEstoque = estoque.buscarItem(itemEstoque);
 
+
+        Long saldoAnterior = calcularSaldoAnterior(itemEstoque, this.getDataMovimentacao());
+
         vincularMovimentacaoAoItem(itemEstoque);
-        diminuirQuantidadeItemEstoque(itemEstoque, quantidade);
+
+        if (saldoAnterior >= quantidade) {
+            diminuirQuantidadeItemEstoque(itemEstoque, quantidade);
+            System.out.println("Id do item estoque " + itemEstoque.getId());
+            System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
+        } else {
+            throw new MovimentacaoEstoqueException("Saldo insuficiente");
+        }
+    }
+
+    private Long calcularSaldoAnterior(ItemEstoque itemEstoque, LocalDate dataMovimentacao) {
+        Long entradas = 0L;
+        Long saidas = 0L;
+
+        for (MovimentacaoEstoque movimentacao : itemEstoque.getMovimentacao()) {
+            if (movimentacao.getDataMovimentacao().isBefore(dataMovimentacao) || movimentacao.getDataMovimentacao().isEqual(dataMovimentacao)) {
+                if (movimentacao.getTipoMovimentacao() == EnumTipoMovimentacao.ENTRADA) {
+                    entradas += movimentacao.getQuantidade();
+                } else if (movimentacao.getTipoMovimentacao() == EnumTipoMovimentacao.SAIDA) {
+                    saidas += movimentacao.getQuantidade();
+                }
+            }
+        }
+
+        return entradas - saidas;
     }
 
     private void vincularMovimentacaoAoItem(ItemEstoque itemEstoque) {
@@ -70,7 +97,7 @@ public class MovimentacaoEstoque {
     }
 
     private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) throws Exception {
-        if (itemEstoque.getQuantidade().compareTo(quantidadeAumentar) >= 0){
+        if (itemEstoque.getQuantidade().compareTo(quantidadeAumentar) >= 0) {
             itemEstoque.setQuantidade(itemEstoque.getQuantidade() - quantidadeAumentar);
         } else {
             throw new MovimentacaoEstoqueException("Saldo insuficiente");
@@ -87,5 +114,9 @@ public class MovimentacaoEstoque {
 
     public EnumTipoMovimentacao getTipoMovimentacao() {
         return tipoMovimentacao;
+    }
+
+    public LocalDate getDataMovimentacao() {
+        return dataMovimentacao;
     }
 }

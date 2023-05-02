@@ -1,35 +1,31 @@
 package br.com.vitavault.model;
 
 import br.com.vitavault.exceptions.EstoqueException;
+import br.com.vitavault.view.EstoquePrinter;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Estoque {
-    private Map<UUID, ItemEstoque> itens;
+    private Set<ItemEstoque> itens;
 
-    public Estoque(Map<UUID, ItemEstoque> itens) {
+    public Estoque(Set<ItemEstoque> itens) {
         this.itens = itens;
     }
 
-    public Map<UUID, ItemEstoque> getItens() {
-        return itens;
-    }
+    public void removerProduto(ItemEstoque itemEstoque) throws EstoqueException {
+        boolean itemRemovido = itens.remove(itemEstoque);
 
-    public void setItens(Map<UUID, ItemEstoque> itens) {
-        this.itens = itens;
-    }
-
-    public void removerProduto(Produto produto, Long quantidade) {
-        //#PROG-7 -implementar logica de adicionar produto
-    }
-
-    public void adicionarProdutoNoEstoque(UUID id, ItemEstoque item) {
-        if (itens == null) {
-            itens = new HashMap<>();
+        if (!itemRemovido) {
+            throw new EstoqueException("O item do produto " + itemEstoque.getProduto().getNome() + " não foi encontrado no estoque.");
         }
-        itens.put(id, item);
+    }
+
+    public void adicionarProdutoNoEstoque(ItemEstoque item) {
+        if (itens == null) {
+            itens = new HashSet<>();
+        }
+        itens.add(item);
     }
 
     public void listar() {
@@ -40,24 +36,17 @@ public class Estoque {
     }
 
     private void listarProdutosEstoque() {
-        for (Map.Entry<UUID, ItemEstoque> item : itens.entrySet()) {
-            String itemListagem = String.format("%nID do Produto: %s %nNome do Produto: %s %nDescrição do produto: %s %nQuantidade em Estoque: %d %nPreço Unitário: %f",
-                    item.getKey(),
-                    item.getValue().getProduto().getNome(),
-                    item.getValue().getProduto().getDescricao(),
-                    item.getValue().getQuantidade(),
-                    item.getValue().getProduto().getPreco());
-
-            System.out.println(itemListagem);
+        for (ItemEstoque item : itens) {
+            EstoquePrinter.imprimirProduto(item);
         }
     }
 
     public ItemEstoque vincularEstoqueAoItem(ItemEstoque itemEstoque) {
-        if (this.itens.get(itemEstoque.getId()) == null) {
+        if (!this.itens.contains(itemEstoque)) {
             itemEstoque.setEstoque(this);
-            adicionarProdutoNoEstoque(itemEstoque.getId(), itemEstoque);
+            adicionarProdutoNoEstoque(itemEstoque);
             System.out.println("vinculou item ao estoque");
-            return this.itens.get(itemEstoque.getId());
+            return itemEstoque;
         } else {
             System.out.println("Ja existe o item no estoque");
             return itemEstoque;
@@ -65,12 +54,14 @@ public class Estoque {
     }
 
     public ItemEstoque buscarItem(ItemEstoque itemEstoque) throws Exception {
-        if (this.itens.get(itemEstoque.getId()) == null) {
-
-            throw  new EstoqueException("O item: " + itemEstoque.getProduto().getNome() + " não existe no estoque");
-        } else {
-            System.out.println("O item existe no estoque");
-            return this.itens.get(itemEstoque.getId());
+        for (ItemEstoque item : itens) {
+            if (item.getId().equals(itemEstoque.getId())) {
+                System.out.println("O item existe no estoque");
+                return itemEstoque;
+            } else {
+                throw new EstoqueException("O item: " + itemEstoque.getProduto().getNome() + " não existe no estoque");
+            }
         }
+        return null;
     }
 }
