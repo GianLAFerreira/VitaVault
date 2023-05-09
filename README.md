@@ -31,7 +31,7 @@ novos clientes, atualize suas informações e visualize uma lista de clientes ca
 - Cadastro de Usuários: o sistema permitirá que o usuário cadastre novos clientes, informando seu nome, CPF, telefone e
   endereço.
 
-- Atualização de Usuários: o usuário poderá atualizar as informações de um cliente já cadastrado no sistema, como seu
+- Atualização de Usuários: o usuário poderá atualizar as informações de um funcionario já cadastrado no sistema, como seu
   nome, CPF, telefone e endereço.
 
 - Remoção de clientes: o sistema permitirá que o usuário remova clientes cadastrados no sistema.

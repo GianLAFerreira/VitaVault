@@ -1,15 +1,9 @@
 package br.com.vitavault.domain;
 
 import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
-import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.Funcionario;
-import br.com.vitavault.model.ItemEstoque;
-import br.com.vitavault.model.Papel;
-import br.com.vitavault.model.Produto;
+import br.com.vitavault.model.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class MovimentacaoEstoque {

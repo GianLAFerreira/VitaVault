@@ -5,7 +5,7 @@
 package br.com.vitavault.swing;
 
 import br.com.vitavault.exceptions.GerenciadorClientesException;
-import br.com.vitavault.model.Cliente;
+import br.com.vitavault.model.Funcionario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -195,11 +195,11 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
             return;
         }
 
-        int cpf = Integer.parseInt(cpfTexto);
-        int telefone = Integer.parseInt(telefoneTexto);
-        Cliente cliente = new Cliente(cpf, nome, endereco, telefone, senha); 
+        String cpf = cpfTexto;
+        String telefone = telefoneTexto;
+        Funcionario funcionario = new Funcionario(cpf, nome, endereco, telefone, senha);
         try {
-            cliente.cadastrarCliente(cliente);
+            funcionario.cadastrarCliente(funcionario);
             JOptionPane.showMessageDialog(this, "Conta criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (GerenciadorClientesException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao criar a conta: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -276,13 +276,13 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
         if(nome.isEmpty()) {
             mensagens.add("O Campo Nome é obrigatório.");
         }
-        if (!isCampoNumerico(cpfTexto)) {
-            mensagens.add("Informe um CPF válido (somente números)");
-        }
+//        if (!isCampoNumerico(cpfTexto)) {
+//            mensagens.add("Informe um CPF válido (somente números)");
+//        }
         
-        if(!isCampoNumerico(telefoneTexto)) {
-            mensagens.add("Informe um telefone válido (somente números)");
-        }
+//        if(!isCampoNumerico(telefoneTexto)) {
+//            mensagens.add("Informe um telefone válido (somente números)");
+//        }
 
         if (endereco.isEmpty()) {
             mensagens.add("Informe o Endereço");

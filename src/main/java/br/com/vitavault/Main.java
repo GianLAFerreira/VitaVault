@@ -79,8 +79,8 @@ public class Main {
     }
 
     private static Funcionario criarFuncionario(Papel papel) {
-        return new Funcionario(UUID.randomUUID(), "Gian", "999", "email@teste",
-                "End teste", "senha1", papel);
+        return new Funcionario("09017144963", "Gian", "RUa 1", "47991061875",
+                "123");
     }
 
     private static Papel criarPapel() {
