@@ -1,6 +1,8 @@
 package br.com.vitavault.model;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -12,8 +14,9 @@ public abstract class Produto {
     private BigDecimal preco;
     private String categoria;
     private boolean situacao;
+    private static Map<UUID, Produto> produtos = new HashMap<>();
 
-    public Produto(UUID id, int codigo, String nome, String descricao, BigDecimal preco, String categoria, boolean situacao) {
+    protected Produto(UUID id, int codigo, String nome, String descricao, BigDecimal preco, String categoria, boolean situacao) {
         this.id = id;
         this.codigo = codigo;
         this.nome = nome;
@@ -21,6 +24,21 @@ public abstract class Produto {
         this.preco = preco;
         this.categoria = categoria;
         this.situacao = situacao;
+        this.adicionarProdutosLista();
+    }
+    
+    private void adicionarProdutosLista() {
+        produtos.put(this.getId(), this);
+    }
+    
+    public static void imprimeProdutosLista() {
+        for (Map.Entry<UUID, Produto> produto : produtos.entrySet()) {
+            UUID id = produto.getKey();
+            Produto oProduto = produto.getValue();
+            System.out.println(Cliente.separador() + "Nome:" + oProduto.getNome() + "\n" +
+                                "ID Produto: "+ id + "\n" + 
+                                "Descrição do Produto: " + oProduto.getDescricao());
+        }
     }
 
     public UUID getId() {

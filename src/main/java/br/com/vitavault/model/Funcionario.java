@@ -5,7 +5,7 @@ import br.com.vitavault.controller.Login;
 import java.util.List;
 import java.util.UUID;
 
-public class Funcionario implements Login {
+public class Funcionario{
 
     private UUID id;
     private String nome;
@@ -54,16 +54,6 @@ public class Funcionario implements Login {
     }
 
     public void atualizar(Funcionario funcionario) {
-
-    }
-
-    @Override
-    public void login(Funcionario funcionario) {
-
-    }
-
-    @Override
-    public void logout(Funcionario funcionario) {
 
     }
 }
