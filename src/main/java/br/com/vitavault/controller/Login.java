@@ -1,9 +1,9 @@
 package br.com.vitavault.controller;
 
-import br.com.vitavault.model.Funcionario;
+import br.com.vitavault.model.Cliente;
 
 public interface Login {
-    void login(Funcionario funcionario);
+    void login(Cliente oCliente);
 
-    void logout(Funcionario funcionario);
+    void logout(Cliente oCliente);
 }
