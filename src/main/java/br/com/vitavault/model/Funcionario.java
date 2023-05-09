@@ -110,7 +110,7 @@ public class Funcionario implements Login, Comparable<Funcionario>{
     public void removerCliente(Funcionario oFuncionario) throws GerenciadorClientesException {
         if(verificarClienteExiste(oFuncionario)) {
             funcionarios.remove(oFuncionario);
-            System.out.printf(Funcionario.separador() + "Cliente \n Nome: %s \n Cpf: %s \n Telefone: %d \n Endereço: %s \n Removido com sucesso" + Funcionario.separador(), oFuncionario.getNome(), oFuncionario.getCpf(), oFuncionario.getTelefone(), oFuncionario.getEndereco());
+            System.out.printf(Funcionario.separador() + "Cliente \n Nome: %s \n Cpf: %s \n Telefone: %s \n Endereço: %s \n Removido com sucesso" + Funcionario.separador(), oFuncionario.getNome(), oFuncionario.getCpf(), oFuncionario.getTelefone(), oFuncionario.getEndereco());
         }
         else {  
             throw new GerenciadorClientesException("Cliente informado não está cadastrado.");
@@ -124,7 +124,7 @@ public class Funcionario implements Login, Comparable<Funcionario>{
 //        ordenarClientesPorNome();
         ordenarClientesPorCpf();
         for(Funcionario funcionario : funcionarios) {
-            System.out.printf(Funcionario.separador() + "Cliente \n Nome: %s \n Cpf: %s \n Telefone: %d \n Endereço: %s" + Funcionario.separador(), funcionario.getNome(), funcionario.getCpf(), funcionario.getTelefone(), funcionario.getEndereco());
+            System.out.printf(Funcionario.separador() + "Cliente \n Nome: %s \n Cpf: %s \n Telefone: %s \n Endereço: %s" + Funcionario.separador(), funcionario.getNome(), funcionario.getCpf(), funcionario.getTelefone(), funcionario.getEndereco());
         }
     }
     
