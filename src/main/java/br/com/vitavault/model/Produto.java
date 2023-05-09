@@ -35,7 +35,7 @@ public abstract class Produto {
         for (Map.Entry<UUID, Produto> produto : produtos.entrySet()) {
             UUID id = produto.getKey();
             Produto oProduto = produto.getValue();
-            System.out.println(Cliente.separador() + "Nome:" + oProduto.getNome() + "\n" +
+            System.out.println(Funcionario.separador() + "Nome:" + oProduto.getNome() + "\n" +
                                 "ID Produto: "+ id + "\n" + 
                                 "Descrição do Produto: " + oProduto.getDescricao());
         }

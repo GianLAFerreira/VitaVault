@@ -4,7 +4,8 @@
  */
 package br.com.vitavault.swing;
 
-import br.com.vitavault.model.Cliente;
+import br.com.vitavault.model.Funcionario;
+
 import java.awt.Color;
 
 /**
@@ -174,10 +175,10 @@ public class Tela_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        int cpf = (int) Long.parseLong(campo_cpf.getText());
+        String cpf = campo_cpf.getText();
         String senha = new String(campo_senha.getPassword());
-        Cliente oCliente = new Cliente(cpf, senha);
-        if(oCliente.logarClienteSistema(oCliente)) {
+        Funcionario oFuncionario = new Funcionario(cpf, senha);
+        if(oFuncionario.logarClienteSistema(oFuncionario)) {
             this.setVisible(false);
         }
     }//GEN-LAST:event_button1ActionPerformed
