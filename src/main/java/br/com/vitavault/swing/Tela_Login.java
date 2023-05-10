@@ -4,15 +4,19 @@
  */
 package br.com.vitavault.swing;
 
+import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.Funcionario;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashSet;
 
 /**
  * @author ariad
  */
 public class Tela_Login extends javax.swing.JFrame {
+
+    private Estoque estoque;
 
     /**
      * Creates new form Tela_Login
@@ -28,6 +32,7 @@ public class Tela_Login extends javax.swing.JFrame {
         // Centraliza o JFrame na tela
         this.setLocationRelativeTo(null);
 
+        estoque = new Estoque(new HashSet<>());
     }
 
     /**

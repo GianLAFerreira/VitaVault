@@ -4,12 +4,28 @@
  */
 package br.com.vitavault.swing;
 
+import br.com.vitavault.exceptions.GerenciadorClientesException;
+import br.com.vitavault.model.Produto;
+import br.com.vitavault.model.ProdutoDepreciavel;
+import br.com.vitavault.model.ProdutoNaoDepreciavel;
+import br.com.vitavault.validation.CadastroProdutoValidation;
+import br.com.vitavault.validation.impl.CadastroProdutoValidationImpl;
+
+import javax.swing.*;
 import java.awt.*;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author lucas
  */
 public class HomeCadastroPro extends javax.swing.JFrame {
+
+    private CadastroProdutoValidation cadastroProdutoValidation;
 
     /**
      * Creates new form HomeConsulta
@@ -21,6 +37,7 @@ public class HomeCadastroPro extends javax.swing.JFrame {
         int x = (screenSize.width - this.getSize().width) / 2;
         int y = (screenSize.height - this.getSize().height) / 2;
         this.setLocation(x, y);
+        cadastroProdutoValidation = new CadastroProdutoValidationImpl();
     }
 
     /**
@@ -36,11 +53,19 @@ public class HomeCadastroPro extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        campoNomeProduto = new javax.swing.JTextField();
+        labelNomeProduto = new javax.swing.JLabel();
+        labelDataValidadeProduto = new javax.swing.JLabel();
+        campoDataValidadeProduto = new javax.swing.JTextField();
+        botaoAdicionarProduto = new javax.swing.JButton();
+        campoCodigoProduto = new javax.swing.JTextField();
+        labelCodigoProduto = new javax.swing.JLabel();
+        campoDescricaoProduto = new javax.swing.JTextField();
+        labelPrecoProduto = new javax.swing.JLabel();
+        labelDescricaoProduto = new javax.swing.JLabel();
+        labelCategoriaProduto = new javax.swing.JLabel();
+        campoCategoriaProduto = new javax.swing.JTextField();
+        campoPrecoProduto = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,38 +102,70 @@ public class HomeCadastroPro extends javax.swing.JFrame {
                                 .addGap(27, 27, 27))
         );
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        campoNomeProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Nome do Produto");
+        labelNomeProduto.setText("Nome do Produto");
 
-        jLabel5.setText("Data de Validade (opcional)");
+        labelDataValidadeProduto.setText("Data de Validade (opcional)");
 
-        jTextField3.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField3.setText("dd/mm/aa");
-        jTextField3.addContainerListener(new java.awt.event.ContainerAdapter() {
+        campoDataValidadeProduto.setForeground(new java.awt.Color(204, 204, 204));
+        campoDataValidadeProduto.setText("dd/mm/aa");
+        campoDataValidadeProduto.addContainerListener(new java.awt.event.ContainerAdapter() {
             public void componentAdded(java.awt.event.ContainerEvent evt) {
                 jTextField3ComponentAdded(evt);
             }
         });
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        campoDataValidadeProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
             }
         });
-        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoDataValidadeProduto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField3KeyTyped(evt);
             }
         });
 
-        jButton1.setText("Adicionar Produto");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoAdicionarProduto.setText("Adicionar Produto");
+        botaoAdicionarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoAdicionarProdutoActionPerformed(evt);
+            }
+        });
+
+        campoCodigoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        labelCodigoProduto.setText("Codigo do Produto");
+
+        campoDescricaoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+
+        labelPrecoProduto.setText("Preço do Produto");
+
+        labelDescricaoProduto.setText("Descrição do Produto");
+
+        labelCategoriaProduto.setText("Categoria do Produto");
+
+        campoCategoriaProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
+
+        campoPrecoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
             }
         });
 
@@ -120,16 +177,24 @@ public class HomeCadastroPro extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(171, 171, 171)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(labelCodigoProduto)
+                                        .addComponent(labelNomeProduto)
+                                        .addComponent(campoNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(campoCodigoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelCategoriaProduto)
+                                        .addComponent(campoCategoriaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(campoDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelPrecoProduto)
+                                        .addComponent(labelDescricaoProduto)
+                                        .addComponent(campoPrecoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(labelDataValidadeProduto)
+                                        .addComponent(campoDataValidadeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(207, 207, 207))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(353, 353, 353)
-                                .addComponent(jButton1)
+                                .addComponent(botaoAdicionarProduto)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -138,15 +203,31 @@ public class HomeCadastroPro extends javax.swing.JFrame {
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(62, 62, 62)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel5))
+                                        .addComponent(labelNomeProduto)
+                                        .addComponent(labelDescricaoProduto))
                                 .addGap(1, 1, 1)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
-                                .addComponent(jButton1)
-                                .addGap(120, 120, 120))
+                                        .addComponent(campoNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(campoDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(labelCodigoProduto)
+                                        .addComponent(labelPrecoProduto))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(campoCodigoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(campoPrecoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(labelCategoriaProduto)
+                                        .addComponent(labelDataValidadeProduto))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(campoCategoriaProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(campoDataValidadeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                                .addComponent(botaoAdicionarProduto)
+                                .addGap(118, 118, 118))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,9 +260,60 @@ public class HomeCadastroPro extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField3KeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    private void botaoAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String nomeProduto = campoNomeProduto.getText().trim();
+        String descricaoProduto = campoDescricaoProduto.getText().trim();
+        String codigoProduto = campoCodigoProduto.getText().trim();
+        String precoProduto = campoPrecoProduto.getText().trim();
+        String categoriaProduto = campoCategoriaProduto.getText().trim();
+        String dataValidadeProduto = campoDataValidadeProduto.getText();
+
+
+        List<String> mensagens = cadastroProdutoValidation.validar(nomeProduto, descricaoProduto, codigoProduto, precoProduto, categoriaProduto);
+
+        if (!mensagens.isEmpty()) {
+            alertaMensagens(mensagens);
+            return;
+        }
+
+        Produto produto = getProduto(nomeProduto, descricaoProduto, codigoProduto, precoProduto, categoriaProduto, dataValidadeProduto);
+
+
+        try {
+            produto.cadastrarProduto(produto);
+            JOptionPane.showMessageDialog(this, "Produto criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (GerenciadorClientesException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao criar o Produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private Produto getProduto(String nomeProduto, String descricaoProduto, String codigoProduto, String precoProduto, String categoriaProduto, String dataValidadeProduto) {
+        if (dataValidadeProduto.isEmpty()) {
+            return new ProdutoNaoDepreciavel(UUID.randomUUID(), Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true);
+        } else {
+            return new ProdutoDepreciavel(UUID.randomUUID(), Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true, new Date());
+        }
+    }
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,14 +351,28 @@ public class HomeCadastroPro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botaoAdicionarProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel labelNomeProduto;
+    private javax.swing.JLabel labelDescricaoProduto;
+    private javax.swing.JLabel labelCodigoProduto;
+    private javax.swing.JLabel labelPrecoProduto;
+    private javax.swing.JLabel labelCategoriaProduto;
+    private javax.swing.JLabel labelDataValidadeProduto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField campoNomeProduto;
+    private javax.swing.JTextField campoDescricaoProduto;
+    private javax.swing.JTextField campoCodigoProduto;
+    private javax.swing.JTextField campoPrecoProduto;
+    private javax.swing.JTextField campoCategoriaProduto;
+    private javax.swing.JTextField campoDataValidadeProduto;
     // End of variables declaration//GEN-END:variables
+
+    private void alertaMensagens(List<String> mensagens) {
+        for (String mensagem : mensagens) {
+            JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package br.com.vitavault.model;
 
+import br.com.vitavault.exceptions.GerenciadorClientesException;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,18 +28,18 @@ public abstract class Produto {
         this.situacao = situacao;
         this.adicionarProdutosLista();
     }
-    
+
     private void adicionarProdutosLista() {
         produtos.put(this.getId(), this);
     }
-    
+
     public static void imprimeProdutosLista() {
         for (Map.Entry<UUID, Produto> produto : produtos.entrySet()) {
             UUID id = produto.getKey();
             Produto oProduto = produto.getValue();
             System.out.println(Funcionario.separador() + "Nome:" + oProduto.getNome() + "\n" +
-                                "ID Produto: "+ id + "\n" + 
-                                "Descrição do Produto: " + oProduto.getDescricao());
+                    "ID Produto: " + id + "\n" +
+                    "Descrição do Produto: " + oProduto.getDescricao());
         }
     }
 
@@ -95,5 +97,22 @@ public abstract class Produto {
 
     public void setSituacao(boolean situacao) {
         this.situacao = situacao;
+    }
+
+    public void cadastrarProduto(Produto produto) throws GerenciadorClientesException {
+        if (verificarProdutoExiste(produto)) {
+            produtos.put(produto.getId(), produto);
+            System.out.printf(Produto.separador() + "Produto \n Nome: %s \n Descricao: %s \n Codigo: %s \n Preço: %s \n Categoria: %s \n Cadastrado com sucesso" + Funcionario.separador(), produto.getNome(), produto.getDescricao(), produto.getCodigo(), produto.getPreco(), produto.getCategoria());
+        } else {
+            throw new GerenciadorClientesException("Erro teste");
+        }
+    }
+
+    private boolean verificarProdutoExiste(Produto produto) {
+        return produtos.entrySet().stream().anyMatch(Produto -> Produto.getValue().codigo == produto.getCodigo());
+    }
+
+    public static String separador() {
+        return "\n------------------------\n";
     }
 }
