@@ -6,6 +6,10 @@ package br.com.vitavault.swing;
 
 import br.com.vitavault.exceptions.GerenciadorClientesException;
 import br.com.vitavault.model.Funcionario;
+import br.com.vitavault.swing.padroesvisuais.JButtonArredondado;
+import br.com.vitavault.swing.padroesvisuais.JFormattedTextFieldArredondado;
+import br.com.vitavault.swing.padroesvisuais.JPasswordFieldArredondado;
+import br.com.vitavault.swing.padroesvisuais.TextFieldArredondado;
 import br.com.vitavault.validation.CadastroContaValidation;
 import br.com.vitavault.validation.impl.CadastroContaValidationImpl;
 
@@ -21,6 +25,7 @@ import java.util.logging.Logger;
 public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
 
     private CadastroContaValidation cadastroContaValidation;
+
 
     /**
      * Creates new form Tela_Cadastrar_Conta
@@ -47,19 +52,19 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        botao_criar_conta = new java.awt.Button();
+        botao_criar_conta = new JButtonArredondado();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        campo_nome = new javax.swing.JTextField();
-        campo_senha = new javax.swing.JPasswordField();
+        campo_nome = new TextFieldArredondado();
+        campo_senha = new JPasswordFieldArredondado();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        campo_cpf = new javax.swing.JTextField();
-        campo_endereco = new javax.swing.JTextField();
-        campo_telefone = new javax.swing.JFormattedTextField();
+        campo_cpf = new TextFieldArredondado();
+        campo_endereco = new TextFieldArredondado();
+        campo_telefone = new JFormattedTextFieldArredondado();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -258,7 +263,7 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button botao_criar_conta;
+    private JButton botao_criar_conta;
     private javax.swing.JTextField campo_cpf;
     private javax.swing.JTextField campo_endereco;
     private javax.swing.JTextField campo_nome;
