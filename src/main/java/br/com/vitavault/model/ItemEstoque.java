@@ -6,6 +6,7 @@ import br.com.vitavault.domain.MovimentacaoEstoque;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ItemEstoque {
@@ -55,5 +56,18 @@ public class ItemEstoque {
 
     public LocalDate getData() {
         return data;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemEstoque that = (ItemEstoque) o;
+        return Objects.equals(id, that.id) && Objects.equals(produto, that.produto) && Objects.equals(estoque, that.estoque);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, produto, estoque);
     }
 }
