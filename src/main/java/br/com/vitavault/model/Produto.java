@@ -115,4 +115,13 @@ public abstract class Produto {
     public static String separador() {
         return "\n------------------------\n";
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
+
+    public static Map<UUID, Produto> getProdutos() {
+        return produtos;
+    }
 }

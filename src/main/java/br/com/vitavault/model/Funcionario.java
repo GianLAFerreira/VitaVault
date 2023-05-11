@@ -1,16 +1,21 @@
-
 package br.com.vitavault.model;
 
 import br.com.vitavault.controller.Login;
 import br.com.vitavault.exceptions.GerenciadorClientesException;
 import br.com.vitavault.swing.HomePage_1;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 /*
 Classe destinada para a criação dos atributos que cada cliente deve ter para se cadastrar no Sistema
 */
-public class Funcionario implements Login, Comparable<Funcionario>{
+public class Funcionario implements Login, Comparable<Funcionario> {
     private String nome;
     private String cpf;
     private String endereco;
@@ -18,38 +23,38 @@ public class Funcionario implements Login, Comparable<Funcionario>{
     private String senha;
     private String telefone;
     protected static List<Funcionario> funcionarios = new ArrayList();
-    
+
     public Funcionario(String cpf, String senha) {
         this.id = UUID.randomUUID();
         this.cpf = cpf;
         this.senha = senha;
     }
-    
+
     public Funcionario(String cpf, String nome, String endereco, String telefone, String senha) {
         this(cpf, senha);
         this.nome = nome;
         this.endereco = endereco;
         this.telefone = telefone;
     }
-        
-    public boolean logarClienteSistema(Funcionario oFuncionario) {
-       for(Funcionario funcionario : funcionarios) {
-            if(Objects.equals(funcionario.getCpf(), oFuncionario.getCpf()) && funcionario.getSenha().equals(oFuncionario.getSenha())) {
+
+    public boolean logarClienteSistema(String cpf, String senha) {
+        for (Funcionario funcionario : funcionarios) {
+            if (Objects.equals(funcionario.getCpf(), cpf) && funcionario.getSenha().equals(senha)) {
                 login(funcionario);
                 return true;
             }
         }
-       return false;
+        return false;
     }
-    
+
     public String getSenha() {
         return senha;
     }
-    
+
     public String getNome() {
         return nome;
     }
-    
+
     public String getCpf() {
         return cpf;
     }
@@ -77,22 +82,21 @@ public class Funcionario implements Login, Comparable<Funcionario>{
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    
+
     //<editor-fold defaultstate="collapsed" desc="Métodos">
     public void cadastrarCliente(Funcionario oFuncionario) throws GerenciadorClientesException {
-        if(!verificarClienteExiste(oFuncionario)) {
+        if (!verificarClienteExiste(oFuncionario)) {
             funcionarios.add(oFuncionario);
             System.out.printf(Funcionario.separador() + "Cliente \n Nome: %s \n Cpf: %s \n Telefone: %s \n Endereço: %s \n Cadastrado com sucesso" + Funcionario.separador(), oFuncionario.getNome(), oFuncionario.getCpf(), oFuncionario.getTelefone(), oFuncionario.getEndereco());
-        }
-        else {
+        } else {
             throw new GerenciadorClientesException("Já existe um cliente cadastrado com esse CPF.");
         }
     }
-    
+
     public void atualizarCliente(Funcionario oFuncionarioAtualizado) throws GerenciadorClientesException {
-        if(!funcionarios.isEmpty()) {
-            for(Funcionario funcionario : funcionarios) {
-                if(funcionario.getCpf() == oFuncionarioAtualizado.getCpf()) {
+        if (!funcionarios.isEmpty()) {
+            for (Funcionario funcionario : funcionarios) {
+                if (funcionario.getCpf() == oFuncionarioAtualizado.getCpf()) {
                     funcionario.setEndereco(oFuncionarioAtualizado.getEndereco());
                     funcionario.setNome(oFuncionarioAtualizado.getNome());
                     funcionario.setTelefone(oFuncionarioAtualizado.getTelefone());
@@ -101,45 +105,48 @@ public class Funcionario implements Login, Comparable<Funcionario>{
                 }
             }
             throw new GerenciadorClientesException("Cliente informado não está cadastrado.");
-        }
-        else {
+        } else {
             throw new GerenciadorClientesException("Não há clientes cadastrados.");
         }
     }
-    
+
     public void removerCliente(Funcionario oFuncionario) throws GerenciadorClientesException {
-        if(verificarClienteExiste(oFuncionario)) {
+        if (verificarClienteExiste(oFuncionario)) {
             funcionarios.remove(oFuncionario);
             System.out.printf(Funcionario.separador() + "Cliente \n Nome: %s \n Cpf: %s \n Telefone: %s \n Endereço: %s \n Removido com sucesso" + Funcionario.separador(), oFuncionario.getNome(), oFuncionario.getCpf(), oFuncionario.getTelefone(), oFuncionario.getEndereco());
-        }
-        else {  
+        } else {
             throw new GerenciadorClientesException("Cliente informado não está cadastrado.");
         }
     }
-    
-    public static void listarClientes() throws GerenciadorClientesException{
-        if(funcionarios.isEmpty()) {
+
+    public static void listarClientes() throws GerenciadorClientesException {
+        if (funcionarios.isEmpty()) {
             throw new GerenciadorClientesException("Não há clientes cadastrados");
         }
 //        ordenarClientesPorNome();
         ordenarClientesPorCpf();
-        for(Funcionario funcionario : funcionarios) {
+        for (Funcionario funcionario : funcionarios) {
             System.out.printf(Funcionario.separador() + "Cliente \n Nome: %s \n Cpf: %s \n Telefone: %s \n Endereço: %s" + Funcionario.separador(), funcionario.getNome(), funcionario.getCpf(), funcionario.getTelefone(), funcionario.getEndereco());
         }
     }
-    
+
     private boolean verificarClienteExiste(Funcionario oFuncionario) {
         return funcionarios.stream().anyMatch(Cliente -> Cliente.getCpf() == oFuncionario.getCpf());
     }
-    
+
     public static String separador() {
         return "\n------------------------\n";
     }
     //</editor-fold>
 
     public void login(Funcionario oFuncionario) {
-        HomePage_1 tela = new HomePage_1();
+
+        HomePage_1 tela = new HomePage_1(oFuncionario, criarEstoque());
         tela.setVisible(true);
+    }
+
+    private Estoque criarEstoque() {
+        return new Estoque(new HashSet<>());
     }
 
     @Override
@@ -150,11 +157,11 @@ public class Funcionario implements Login, Comparable<Funcionario>{
     public int compareTo(Funcionario oFuncionario) {
         return this.nome.compareTo(oFuncionario.getNome());
     }
-    
+
     public static void ordenarClientesPorNome() {
         Collections.sort(funcionarios);
     }
-    
+
     public static void ordenarClientesPorCpf() {
         Comparator<Funcionario> comparador = new Comparator<Funcionario>() {
             @Override

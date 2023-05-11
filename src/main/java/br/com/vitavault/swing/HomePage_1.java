@@ -4,17 +4,28 @@
  */
 package br.com.vitavault.swing;
 
+import br.com.vitavault.domain.MovimentacaoEstoque;
+import br.com.vitavault.model.Estoque;
+import br.com.vitavault.model.Funcionario;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
 
 /**
  * @author lucas
  */
 public class HomePage_1 extends javax.swing.JFrame {
+    private Funcionario funcionarioLogado;
+    private Estoque estoqueService;
 
     /**
      * Creates new form HomePage
      */
-    public HomePage_1() {
+    public HomePage_1(Funcionario funcionario, Estoque estoque) {
+        funcionarioLogado = funcionario;
+        estoqueService = estoque;
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -50,8 +61,9 @@ public class HomePage_1 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         uppanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        botao_atualizar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -64,10 +76,6 @@ public class HomePage_1 extends javax.swing.JFrame {
         titlepanel1.setBackground(new java.awt.Color(0, 136, 209));
         titlepanel1.setToolTipText("");
         titlepanel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                titlepanel1MouseClicked(evt);
-            }
-
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 titlepanel1MouseEntered(evt);
             }
@@ -250,7 +258,7 @@ public class HomePage_1 extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidepanelLayout.createSequentialGroup()
                                 .addGroup(sidepanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(sidepanelLayout.createSequentialGroup()
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addContainerGap(15, Short.MAX_VALUE)
                                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(11, 11, 11))
                                         .addGroup(sidepanelLayout.createSequentialGroup()
@@ -285,6 +293,13 @@ public class HomePage_1 extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Últimas Movimentações de Estoque");
 
+        botao_atualizar.setText("Atualizar Movimentações");
+        botao_atualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout uppanelLayout = new javax.swing.GroupLayout(uppanel);
         uppanel.setLayout(uppanelLayout);
         uppanelLayout.setHorizontalGroup(
@@ -292,35 +307,24 @@ public class HomePage_1 extends javax.swing.JFrame {
                         .addGroup(uppanelLayout.createSequentialGroup()
                                 .addGap(173, 173, 173)
                                 .addComponent(jLabel4)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botao_atualizar)
+                                .addGap(55, 55, 55))
         );
         uppanelLayout.setVerticalGroup(
                 uppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uppanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botao_atualizar)
+                                .addContainerGap())
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {"+1 Dramin", "+3 Decongex", "+5 Diazepam", "+2 Pastilha Vick"},
-                        {"-2 Gel Antiséptico", "-2 Gel Antiséptico", "+3 Decongex", "-2 Gel Antiséptico"},
-                        {"+5 Diazepam", null, "+1 Dramin", null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "21/03", "22/02", "24/03", "25/03"
-                }
-        ) {
-            Class[] types = new Class[]{
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
+        String[] colunas = {"Produto", "Data", "Tipo Movimentacao", "Quantidade"};
+        DefaultTableModel tableModel = new DefaultTableModel(colunas, 0);
+        tabela = new JTable(tableModel);
 
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
         background.setLayout(backgroundLayout);
@@ -365,12 +369,8 @@ public class HomePage_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_titlepanel3MouseClicked
 
     private void titlepanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlepanel2MouseClicked
-        new HomeMovimentacao().show();
+        new HomeMovimentacao(funcionarioLogado, estoqueService).show();
     }//GEN-LAST:event_titlepanel2MouseClicked
-
-    private void titlepanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlepanel1MouseClicked
-        new HomeConsulta().show();
-    }//GEN-LAST:event_titlepanel1MouseClicked
 
     private void titlepanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titlepanel4MouseClicked
         new HomeCadastroUsu().show();        // TODO add your handling code here:
@@ -381,51 +381,21 @@ public class HomePage_1 extends javax.swing.JFrame {
     }//GEN-LAST:event_titlepanel1MouseEntered
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        new HomeConsulta().show();
+        new HomeConsulta(estoqueService).show();
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void botaoAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        atualizarTabelaMovimentacoesEstoque(tabela);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HomePage_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HomePage_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HomePage_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HomePage_1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HomePage_1().setVisible(true);
-            }
-        });
-
-
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
+    private javax.swing.JButton botao_atualizar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -436,7 +406,7 @@ public class HomePage_1 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabela;
     private javax.swing.JPanel sidepanel;
     private javax.swing.JPanel titlepanel;
     private javax.swing.JPanel titlepanel1;
@@ -445,4 +415,22 @@ public class HomePage_1 extends javax.swing.JFrame {
     private javax.swing.JPanel titlepanel4;
     private javax.swing.JPanel uppanel;
     // End of variables declaration//GEN-END:variables
+
+    private void atualizarTabelaMovimentacoesEstoque(JTable tabela) {
+        DefaultTableModel tableModel = (DefaultTableModel) tabela.getModel();
+        tableModel.setRowCount(0); // Limpar as linhas existentes
+
+        List<MovimentacaoEstoque> produtos = estoqueService.getMovimentacoes();
+
+        for (MovimentacaoEstoque movimentacao : produtos) {
+            Object[] rowData = {
+                    movimentacao.getItem().getProduto(),
+                    movimentacao.getDataMovimentacao(),
+                    movimentacao.getTipoMovimentacao(),
+                    movimentacao.getQuantidade()
+            };
+
+            tableModel.addRow(rowData);
+        }
+    }
 }
