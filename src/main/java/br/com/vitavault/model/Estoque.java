@@ -1,12 +1,16 @@
 package br.com.vitavault.model;
 
+import br.com.vitavault.domain.MovimentacaoEstoque;
 import br.com.vitavault.exceptions.EstoqueException;
 import br.com.vitavault.view.EstoquePrinter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Estoque {
+
     private Set<ItemEstoque> itens;
 
     public Estoque(Set<ItemEstoque> itens) {
@@ -53,15 +57,39 @@ public class Estoque {
         }
     }
 
-    public ItemEstoque buscarItem(ItemEstoque itemEstoque) throws Exception {
+    public ItemEstoque buscarItem(ItemEstoque itemEstoque) throws EstoqueException {
         for (ItemEstoque item : itens) {
-            if (item.getId().equals(itemEstoque.getId())) {
+            if (item.getId().equals(itemEstoque.getProduto().getId())) {
                 System.out.println("O item existe no estoque");
-                return itemEstoque;
+                return item;
             } else {
                 throw new EstoqueException("O item: " + itemEstoque.getProduto().getNome() + " não existe no estoque");
             }
         }
         return null;
+    }
+
+    public Set<ItemEstoque> getItens() {
+        return itens;
+    }
+
+    public List<ItemEstoque> getItensList() {
+        List<ItemEstoque> itemEstoques = new ArrayList<>();
+        for (ItemEstoque item : itens) {
+            itemEstoques.add(item);
+        }
+
+        return itemEstoques;
+    }
+
+    public List<MovimentacaoEstoque> getMovimentacoes() {
+        List<MovimentacaoEstoque> movimentacaoEstoqueList = new ArrayList<>();
+        for (ItemEstoque item : itens) {
+            for (MovimentacaoEstoque movimentacaoEstoque : item.getMovimentacao()) {
+                movimentacaoEstoqueList.add(movimentacaoEstoque);
+            }
+        }
+
+        return movimentacaoEstoqueList;
     }
 }

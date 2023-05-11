@@ -190,7 +190,7 @@ public class Tela_Login extends javax.swing.JFrame {
         String cpf = campo_cpf.getText();
         String senha = new String(campo_senha.getPassword());
         Funcionario oFuncionario = new Funcionario(cpf, senha);
-        if (oFuncionario.logarClienteSistema(oFuncionario)) {
+        if (oFuncionario.logarClienteSistema(cpf, senha)) {
             this.setVisible(false);
         }
     }//GEN-LAST:event_button1ActionPerformed

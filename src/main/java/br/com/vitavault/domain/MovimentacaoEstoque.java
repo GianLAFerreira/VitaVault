@@ -1,7 +1,12 @@
 package br.com.vitavault.domain;
 
+import br.com.vitavault.exceptions.EstoqueException;
 import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
-import br.com.vitavault.model.*;
+import br.com.vitavault.model.Estoque;
+import br.com.vitavault.model.Funcionario;
+import br.com.vitavault.model.ItemEstoque;
+import br.com.vitavault.model.Papel;
+import br.com.vitavault.model.Produto;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -28,10 +33,10 @@ public class MovimentacaoEstoque {
     }
 
     public MovimentacaoEstoque(Produto produto, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
-        this(new ItemEstoque(UUID.randomUUID(), produto, dataMovimentacao, 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
+        this(new ItemEstoque(produto.getId(), produto, dataMovimentacao, 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
     }
 
-    public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) throws Exception {
+    public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) throws MovimentacaoEstoqueException, EstoqueException {
         if (tipoMovimentacao.equals(EnumTipoMovimentacao.ENTRADA)) {
             movimentarEntrada(itemEstoque, quantidade);
             System.out.println("Id do item estoque " + itemEstoque.getId());
@@ -50,7 +55,7 @@ public class MovimentacaoEstoque {
         aumentarQuantidadeItemEstoque(itemEstoque, quantidade);
     }
 
-    private void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) throws Exception {
+    private void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) throws MovimentacaoEstoqueException, EstoqueException {
         itemEstoque = estoque.buscarItem(itemEstoque);
 
 
@@ -92,7 +97,7 @@ public class MovimentacaoEstoque {
         itemEstoque.setQuantidade(itemEstoque.getQuantidade() + quantidadeAumentar);
     }
 
-    private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) throws Exception {
+    private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) throws MovimentacaoEstoqueException, EstoqueException {
         if (itemEstoque.getQuantidade().compareTo(quantidadeAumentar) >= 0) {
             itemEstoque.setQuantidade(itemEstoque.getQuantidade() - quantidadeAumentar);
         } else {
