@@ -5,14 +5,12 @@
 package br.com.vitavault.view;
 
 import br.com.vitavault.Utils.Utils;
-import br.com.vitavault.domain.EnumNivelAcesso;
 import br.com.vitavault.domain.EnumTipoMovimentacao;
 import br.com.vitavault.domain.MovimentacaoEstoque;
 import br.com.vitavault.exceptions.EstoqueException;
 import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
 import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.Funcionario;
-import br.com.vitavault.model.Papel;
 import br.com.vitavault.model.Produto;
 import br.com.vitavault.validation.MovimentacaoEstoqueValidation;
 import br.com.vitavault.validation.impl.MovimentacaoEstoqueValidationImpl;
@@ -293,7 +291,6 @@ public class MovimentacaoView extends javax.swing.JFrame {
         MovimentacaoEstoque movimentacaoEstoque
                 = new MovimentacaoEstoque(produto,
                 funcionarioLogado,
-                criarPapel(),
                 dataFormatada,
                 tipoMovimentacao,
                 quantidadeFormatada,
@@ -310,9 +307,6 @@ public class MovimentacaoView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private static Papel criarPapel() {
-        return new Papel(UUID.randomUUID(), EnumNivelAcesso.DIGITADOR, "Teste");
-    }
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:

@@ -19,9 +19,10 @@ public class ItemEstoque {
     private EnumTipoMovimentacao tipoMovimentacao;
     private List<MovimentacaoEstoque> movimentacao = new ArrayList<>();
 
-    public ItemEstoque(UUID id, Produto produto, LocalDate data, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
+    public ItemEstoque(UUID id, Produto produto, Estoque estoque, LocalDate data, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
         this.id = id;
         this.produto = produto;
+        this.estoque = estoque;
         this.data = data;
         this.quantidade = quantidade;
         this.tipoMovimentacao = tipoMovimentacao;
@@ -69,5 +70,17 @@ public class ItemEstoque {
     @Override
     public int hashCode() {
         return Objects.hash(id, produto, estoque);
+    }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public EnumTipoMovimentacao getTipoMovimentacao() {
+        return tipoMovimentacao;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }
