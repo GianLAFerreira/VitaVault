@@ -14,9 +14,8 @@ import br.com.vitavault.validation.impl.CadastroProdutoValidationImpl;
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -293,9 +292,9 @@ public class HomeCadastroPro extends javax.swing.JFrame {
 
     private Produto getProduto(String nomeProduto, String descricaoProduto, String codigoProduto, String precoProduto, String categoriaProduto, String dataValidadeProduto) {
         if (dataValidadeProduto.isEmpty()) {
-            return new ProdutoNaoDepreciavel(UUID.randomUUID(), Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true);
+            return new ProdutoNaoDepreciavel(Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true);
         } else {
-            return new ProdutoDepreciavel(UUID.randomUUID(), Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true, new Date());
+            return new ProdutoDepreciavel(Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true, LocalDate.now());
         }
     }
 

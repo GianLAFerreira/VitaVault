@@ -37,6 +37,14 @@ public class Funcionario implements Login, Comparable<Funcionario> {
         this.telefone = telefone;
     }
 
+    public Funcionario(UUID id, String cpf, String nome, String endereco, String telefone, String senha) {
+        this(cpf, senha);
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+
     public boolean logarClienteSistema(String cpf, String senha) {
         for (Funcionario funcionario : funcionarios) {
             if (Objects.equals(funcionario.getCpf(), cpf) && funcionario.getSenha().equals(senha)) {
@@ -170,5 +178,9 @@ public class Funcionario implements Login, Comparable<Funcionario> {
             }
         };
         Collections.sort(funcionarios, comparador);
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }
