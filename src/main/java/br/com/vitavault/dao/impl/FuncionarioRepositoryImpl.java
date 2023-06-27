@@ -109,6 +109,72 @@ public class FuncionarioRepositoryImpl implements FuncionarioRepository {
     }
 
     @Override
+    public Funcionario buscarFuncionarioByCPF(String cpf) {
+        Funcionario funcionario = null;
+        String sql = "SELECT * FROM funcionario WHERE cpf = ?";
+
+        try (Connection conn = conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setObject(1, cpf);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                UUID idcoluna = UUID.fromString(rs.getString("id"));
+                String nome = rs.getString("nome");
+                String cpfColuna = rs.getString("cpf");
+                String endereco = rs.getString("endereco");
+                String senha = rs.getString("senha");
+                String telefone = rs.getString("telefone");
+
+                funcionario = new Funcionario(idcoluna, cpfColuna, nome, endereco, senha, telefone);
+                System.out.println("Funcionario encontrado com sucesso");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+            ConexaoBD.descontecar();
+        }
+        return funcionario;
+    }
+
+    @Override
+    public Funcionario buscarFuncionarioByCPFAndSenha(String cpf, String senha) {
+        Funcionario funcionario = null;
+        String sql = "SELECT * FROM funcionario WHERE cpf = ? and senha = ?";
+
+        try (Connection conn = conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setObject(1, cpf);
+            pstmt.setObject(2, senha);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                UUID idcoluna = UUID.fromString(rs.getString("id"));
+                String nome = rs.getString("nome");
+                String cpfColuna = rs.getString("cpf");
+                String endereco = rs.getString("endereco");
+                String senhaColuna = rs.getString("senha");
+                String telefone = rs.getString("telefone");
+
+                funcionario = new Funcionario(idcoluna, cpfColuna, nome, endereco, senhaColuna, telefone);
+                System.out.println("Funcionario encontrado com sucesso");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+            ConexaoBD.descontecar();
+        }
+        return funcionario;
+    }
+
+
+    @Override
     public boolean removerFuncionario(UUID id) {
         String sql = "DELETE FROM funcionario WHERE id = ?";
 

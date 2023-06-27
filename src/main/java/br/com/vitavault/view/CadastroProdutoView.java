@@ -1,6 +1,6 @@
-package br.com.vitavault.swing;
+package br.com.vitavault.view;
 
-import br.com.vitavault.exceptions.GerenciadorClientesException;
+import br.com.vitavault.exceptions.GerenciadorFuncionariosException;
 import br.com.vitavault.model.Produto;
 import br.com.vitavault.model.ProdutoDepreciavel;
 import br.com.vitavault.model.ProdutoNaoDepreciavel;
@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HomeCadastroPro extends javax.swing.JFrame {
+public class CadastroProdutoView extends javax.swing.JFrame {
 
     private CadastroProdutoValidation cadastroProdutoValidation;
 
-    public HomeCadastroPro() {
+    public CadastroProdutoView() {
         initComponents();
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -28,11 +28,11 @@ public class HomeCadastroPro extends javax.swing.JFrame {
         this.setLocation(x, y);
         cadastroProdutoValidation = new CadastroProdutoValidationImpl();
     }
-    
+
     public void exibe() {
         setVisible(true);
     }
-    
+
     private void alertaMensagens(List<String> mensagens) {
         for (String mensagem : mensagens) {
             JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -282,9 +282,9 @@ public class HomeCadastroPro extends javax.swing.JFrame {
             produto.cadastrarProduto(produto);
             JOptionPane.showMessageDialog(this, "Produto criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
-        } catch (GerenciadorClientesException ex) {
+        } catch (GerenciadorFuncionariosException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao criar o Produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastrarContaView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

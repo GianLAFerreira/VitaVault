@@ -62,7 +62,7 @@ public class Main {
 //        estoque.listar();
 
 
-        //rodarTesteFuncionarioNoBanco();
+        rodarTesteFuncionarioNoBanco();
         //rodarTesteProdutosNoBnco();
         //rodarTestePapelNoBanco();
     }

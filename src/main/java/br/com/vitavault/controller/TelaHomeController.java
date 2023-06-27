@@ -1,56 +1,63 @@
-
 package br.com.vitavault.controller;
 
+import br.com.vitavault.dao.FuncionarioRepository;
+import br.com.vitavault.dao.impl.FuncionarioRepositoryImpl;
 import br.com.vitavault.domain.MovimentacaoEstoque;
-import br.com.vitavault.swing.HomeCadastroPro;
-import br.com.vitavault.swing.HomeConsulta;
-import br.com.vitavault.swing.HomeMovimentacao;
-import br.com.vitavault.swing.HomePage_1;
-import java.util.List;
-import javax.swing.JTable;
+import br.com.vitavault.model.Funcionario;
+import br.com.vitavault.view.CadastroProdutoView;
+import br.com.vitavault.view.ConsultaMovimentacaoView;
+import br.com.vitavault.view.HomePageView;
+import br.com.vitavault.view.MovimentacaoView;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 public class TelaHomeController {
-    private HomePage_1 oTelaHome;
-    private TelaLoginController oTelaLoginController;
-    
-    public TelaHomeController(HomePage_1 oTelaHome, TelaLoginController oTelaLoginController) {
-        this.oTelaHome = oTelaHome;
-        this.oTelaLoginController = oTelaLoginController;
+    private HomePageView homePageView;
+    private TelaLoginController telaLoginController;
+    private FuncionarioRepository funcionarioRepository;
+    private Funcionario funcionario;
+
+    public TelaHomeController(HomePageView homePageView, TelaLoginController telaLoginController) {
+        this.homePageView = homePageView;
+        this.telaLoginController = telaLoginController;
+        this.funcionarioRepository = new FuncionarioRepositoryImpl();
         inicializarBotoes();
     }
-    
+
     private void inicializarBotoes() {
-        oTelaHome.adicionaAcaoBotaoMovimentaEstoque((a) -> exibeTelaConsultaEstoque());
-        oTelaHome.adicionarAcaoBotaoConsultaEstoque((a) -> exibeTelaMovimentaoEstoque());
-        oTelaHome.adicionaAcaoBotaoCadastroProduto((a) -> exibeTelaCadastroProduto());
-        oTelaHome.adicionaAcaoBotaoAtualizarMovimentacao((a) -> atualizarTabelaMovimentacoesEstoque());
-        oTelaHome.adicionaAcaoBotaoSair((a) -> sairTelaHome());
+        homePageView.adicionaAcaoBotaoMovimentaEstoque((a) -> exibeTelaConsultaEstoque());
+        homePageView.adicionarAcaoBotaoConsultaEstoque((a) -> exibeTelaMovimentaoEstoque());
+        homePageView.adicionaAcaoBotaoCadastroProduto((a) -> exibeTelaCadastroProduto());
+        homePageView.adicionaAcaoBotaoAtualizarMovimentacao((a) -> atualizarTabelaMovimentacoesEstoque());
+        homePageView.adicionaAcaoBotaoSair((a) -> sairTelaHome());
     }
-    
+
     private void exibeTelaConsultaEstoque() {
-        new HomeConsulta(oTelaLoginController.getEstoque()).exibe();
+        new ConsultaMovimentacaoView(telaLoginController.getEstoque()).exibe();
     }
-    
+
     private void exibeTelaMovimentaoEstoque() {
-        new HomeMovimentacao(oTelaLoginController.getFuncionarioLogado(), oTelaLoginController.getEstoque()).exibe();
+        new MovimentacaoView(funcionario, telaLoginController.getEstoque()).exibe();
+        // --ajustar depois para buscar o funcionario logado
     }
-     
+
     private void exibeTelaCadastroProduto() {
-        new HomeCadastroPro().exibe();
+        new CadastroProdutoView().exibe();
     }
-    
+
     private void sairTelaHome() {
-        oTelaHome.dispose();
-        oTelaLoginController.exibe();
+        homePageView.dispose();
+        telaLoginController.exibe();
     }
-    
+
     private void atualizarTabelaMovimentacoesEstoque() {
-        JTable tabela = oTelaHome.getTabela();
+        JTable tabela = homePageView.getTabela();
         DefaultTableModel tableModel = (DefaultTableModel) tabela.getModel();
         tableModel.setRowCount(0); // Limpar as linhas existentes
 
-        List<MovimentacaoEstoque> produtos = oTelaLoginController.getEstoque().getMovimentacoes();
+        List<MovimentacaoEstoque> produtos = telaLoginController.getEstoque().getMovimentacoes();
 
         for (MovimentacaoEstoque movimentacao : produtos) {
             Object[] rowData = {
@@ -63,9 +70,9 @@ public class TelaHomeController {
             tableModel.addRow(rowData);
         }
     }
-    
+
     public void exibirTela() {
-        oTelaHome.exibe();
+        homePageView.exibe();
     }
-    
+
 }

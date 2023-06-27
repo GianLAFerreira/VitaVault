@@ -13,6 +13,10 @@ public interface FuncionarioRepository {
 
     Funcionario buscarFuncionario(UUID id);
 
+    Funcionario buscarFuncionarioByCPF(String cpf);
+
+    Funcionario buscarFuncionarioByCPFAndSenha(String cpf, String senha);
+
     boolean removerFuncionario(UUID id);
 
     List<Funcionario> listarFuncionarios();
