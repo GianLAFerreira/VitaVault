@@ -33,7 +33,16 @@ public class Funcionario implements Comparable<Funcionario> {
         this.endereco = endereco;
         this.telefone = telefone;
     }
-    
+
+    public Funcionario(UUID id, String cpf, String nome, String endereco, String telefone, String senha) {
+        this(cpf, senha);
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.telefone = telefone;
+    }
+
+
     public static boolean verificarClienteCadastradoSistema(String cpf, String senha) {
         for (Funcionario funcionario : funcionarios) {
             if (Objects.equals(funcionario.getCpf(), cpf)) {
@@ -135,7 +144,7 @@ public class Funcionario implements Comparable<Funcionario> {
     }
     //</editor-fold>
 
-   
+
     @Override
     public int compareTo(Funcionario oFuncionario) {
         return this.nome.compareTo(oFuncionario.getNome());
@@ -153,5 +162,9 @@ public class Funcionario implements Comparable<Funcionario> {
             }
         };
         Collections.sort(funcionarios, comparador);
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

@@ -29,6 +29,16 @@ public abstract class Produto {
         this.adicionarProdutosLista();
     }
 
+    protected Produto(int codigo, String nome, String descricao, BigDecimal preco, String categoria, boolean situacao) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.categoria = categoria;
+        this.situacao = situacao;
+        this.adicionarProdutosLista();
+    }
+
     private void adicionarProdutosLista() {
         produtos.put(this.getId(), this);
     }
