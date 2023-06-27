@@ -68,7 +68,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="115" max="-2" attributes="0"/>
-                          <Component id="botao_criar_conta" min="-2" pref="129" max="-2" attributes="0"/>
+                          <Component id="btnCriarConta" min="-2" pref="129" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
@@ -94,7 +94,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" pref="51" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="botao_criar_conta" min="-2" pref="38" max="-2" attributes="0"/>
+                          <Component id="btnCriarConta" min="-2" pref="38" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -151,7 +151,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                              <Component id="button1" min="-2" pref="129" max="-2" attributes="0"/>
+                              <Component id="btnLogar" min="-2" pref="129" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="89" max="32767" attributes="0"/>
@@ -177,7 +177,7 @@
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Component id="campo_senha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="51" max="32767" attributes="0"/>
-                      <Component id="button1" min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="btnLogar" min="-2" pref="38" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -246,7 +246,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="java.awt.Button" name="button1">
+            <Component class="java.awt.Button" name="btnLogar">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="12" style="0"/>
@@ -254,15 +254,12 @@
                 <Property name="label" type="java.lang.String" value="ENTRAR"/>
                 <Property name="name" type="java.lang.String" value="botao_entrar" noResource="true"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
         </Component>
-        <Component class="java.awt.Button" name="botao_criar_conta">
+        <Component class="java.awt.Button" name="btnCriarConta">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -273,9 +270,6 @@
             <Property name="label" type="java.lang.String" value="CLIQUE AQUI"/>
             <Property name="name" type="java.lang.String" value="botao_entrar" noResource="true"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botao_criar_contaActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

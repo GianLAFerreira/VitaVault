@@ -1,13 +1,10 @@
 package br.com.vitavault.model;
 
-import br.com.vitavault.controller.Login;
 import br.com.vitavault.exceptions.GerenciadorClientesException;
-import br.com.vitavault.swing.HomePage_1;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -15,7 +12,7 @@ import java.util.UUID;
 /*
 Classe destinada para a criação dos atributos que cada cliente deve ter para se cadastrar no Sistema
 */
-public class Funcionario implements Login, Comparable<Funcionario> {
+public class Funcionario implements Comparable<Funcionario> {
     private String nome;
     private String cpf;
     private String endereco;
@@ -45,10 +42,10 @@ public class Funcionario implements Login, Comparable<Funcionario> {
         this.telefone = telefone;
     }
 
-    public boolean logarClienteSistema(String cpf, String senha) {
+
+    public static boolean verificarClienteCadastradoSistema(String cpf, String senha) {
         for (Funcionario funcionario : funcionarios) {
-            if (Objects.equals(funcionario.getCpf(), cpf) && funcionario.getSenha().equals(senha)) {
-                login(funcionario);
+            if (Objects.equals(funcionario.getCpf(), cpf)) {
                 return true;
             }
         }
@@ -147,19 +144,6 @@ public class Funcionario implements Login, Comparable<Funcionario> {
     }
     //</editor-fold>
 
-    public void login(Funcionario oFuncionario) {
-
-        HomePage_1 tela = new HomePage_1(oFuncionario, criarEstoque());
-        tela.setVisible(true);
-    }
-
-    private Estoque criarEstoque() {
-        return new Estoque(new HashSet<>());
-    }
-
-    @Override
-    public void logout(Funcionario oFuncionario) {
-    }
 
     @Override
     public int compareTo(Funcionario oFuncionario) {

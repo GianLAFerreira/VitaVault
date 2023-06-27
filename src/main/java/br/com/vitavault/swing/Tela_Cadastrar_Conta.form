@@ -71,26 +71,25 @@
                       <Component id="campo_nome" min="-2" pref="219" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="156" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="campo_telefone" min="-2" pref="219" max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="campo_endereco" min="-2" pref="219" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                              <Component id="campo_senha" min="-2" pref="219" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="137" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="167" max="-2" attributes="0"/>
-                  <Component id="botao_criar_conta" min="-2" pref="129" max="-2" attributes="0"/>
+                  <Component id="btnCriarConta" min="-2" pref="129" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="campo_telefone" max="32767" attributes="0"/>
+                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      <Component id="campo_endereco" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="campo_senha" alignment="0" max="32767" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -122,10 +121,10 @@
                   <Component id="campo_telefone" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="campo_senha" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                  <Component id="botao_criar_conta" min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                  <Component id="btnCriarConta" min="-2" pref="38" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="252" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -139,7 +138,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="java.awt.Button" name="botao_criar_conta">
+        <Component class="java.awt.Button" name="btnCriarConta">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
@@ -147,9 +146,6 @@
             <Property name="label" type="java.lang.String" value="CRIAR CONTA"/>
             <Property name="name" type="java.lang.String" value="botao_entrar" noResource="true"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botao_criar_contaActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -212,9 +208,6 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campo_nomeActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="campo_cpf">
           <Properties>
@@ -227,9 +220,6 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campo_cpfActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="campo_endereco">
           <Properties>
@@ -242,9 +232,6 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campo_enderecoActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="campo_telefone">
           <Properties>
@@ -257,11 +244,8 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campo_telefoneActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="campo_senha">
+        <Component class="javax.swing.JPasswordField" name="campo_senha">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cb" green="a6" red="8f" type="rgb"/>
@@ -272,9 +256,6 @@
               </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="campo_senhaActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
