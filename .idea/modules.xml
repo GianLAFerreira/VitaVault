@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/VitaVault.iml" filepath="$PROJECT_DIR$/VitaVault.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/VitaVault.iml" filepath="$PROJECT_DIR$/.idea/VitaVault.iml" />
     </modules>
   </component>
 </project>

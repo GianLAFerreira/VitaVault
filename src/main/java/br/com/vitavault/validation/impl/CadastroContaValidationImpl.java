@@ -2,6 +2,7 @@ package br.com.vitavault.validation.impl;
 
 import br.com.vitavault.Utils.TranslationConstants;
 import br.com.vitavault.Utils.Utils;
+import br.com.vitavault.model.Funcionario;
 import br.com.vitavault.validation.CadastroContaValidation;
 
 import java.util.ArrayList;
@@ -16,10 +17,11 @@ public class CadastroContaValidationImpl implements CadastroContaValidation {
         validarTelefone(telefoneTexto, mensagens);
         validarEndereco(endereco, mensagens);
         validarSenha(senha, mensagens);
-
+        validaCpfExisteCadastro(cpfTexto, senha, mensagens);
+        
         return mensagens;
     }
-
+    
     private void validarNome(String nome, List<String> mensagens) {
         if (nome.isEmpty()) {
             mensagens.add(TranslationConstants.getMessage(TranslationConstants.NOME_OBRIGATORIO));
@@ -94,5 +96,11 @@ public class CadastroContaValidationImpl implements CadastroContaValidation {
         // Verifica o segundo dígito de verificação
         return resto == Character.getNumericValue(cpf.charAt(10));
     }
-
+    
+    private void validaCpfExisteCadastro(String cpf, String senha, List<String> mensagens) {
+        if(Funcionario.verificarClienteCadastradoSistema(cpf, senha)){
+            mensagens.add(TranslationConstants.getMessage(TranslationConstants.CPF_EXISTE_CADASTRADO));
+        }
+    }
+    //verificar se isso esta funcionando
 }
