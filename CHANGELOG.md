@@ -8,6 +8,7 @@
 * [#PROG-10](https://trello.com/c/ZjtrJmWU/6-prog-10) - Implementa o processo de adicionar item ao estoque
 * [#PROG-14](https://trello.com/c/wERWYwpZ/12-prog-14) - Ajusta o projeto para trabalhar com a injeção de dependencia
 * [#PROG-15](https://trello.com/c/e12fN3DP/13-prog-15) - Cria as exceções de `Estoque`  e `MovimentacaoEstoque`
+*
 
 ### Melhorias
 
