@@ -1,37 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package br.com.vitavault.swing;
 
 import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.Funcionario;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.HashSet;
 
-/**
- * @author ariad
- */
 public class Tela_Login extends javax.swing.JFrame {
-
     private Estoque estoque;
-
-    /**
-     * Creates new form Tela_Login
-     */
+    
     public Tela_Login() {
         initComponents();
         this.getContentPane().setBackground(Color.white);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-
+        
         // Centraliza o JFrame na tela
         this.setLocationRelativeTo(null);
         
         setResizable(false);
         
         estoque = new Estoque(new HashSet<>());
+    }
+    
+    public void adicionarAcaoBotaoCadastrarUsuario(ActionListener acao) {
+        btnCriarConta.addActionListener(acao);
+    }
+    
+    public void adicionarAcaoBotaoLogar(ActionListener acao) {
+        btnLogar.addActionListener(acao);
+    }
+    
+    public String getCpf() {
+        return campo_cpf.getText();
+    }
+    
+    public String getSenha() {
+       return new String(campo_senha.getPassword());
+    }
+    
+    public void exibe() {
+        setVisible(true);
+    }
+    
+    public void resetarCamposLogin() {
+        campo_cpf.setText("");
+        campo_senha.setText("");
     }
 
     /**
@@ -53,9 +67,9 @@ public class Tela_Login extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         campo_cpf = new javax.swing.JTextField();
         campo_senha = new javax.swing.JPasswordField();
-        button1 = new java.awt.Button();
+        btnLogar = new java.awt.Button();
         jLabel1 = new javax.swing.JLabel();
-        botao_criar_conta = new java.awt.Button();
+        btnCriarConta = new java.awt.Button();
 
         kButton1.setText("kButton1");
 
@@ -90,14 +104,9 @@ public class Tela_Login extends javax.swing.JFrame {
 
         campo_senha.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(98, 124, 165)));
 
-        button1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        button1.setLabel("ENTRAR");
-        button1.setName("botao_entrar"); // NOI18N
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
-            }
-        });
+        btnLogar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnLogar.setLabel("ENTRAR");
+        btnLogar.setName("botao_entrar"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,7 +125,7 @@ public class Tela_Login extends javax.swing.JFrame {
                             .addComponent(campo_senha)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(97, 97, 97)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(89, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -136,7 +145,7 @@ public class Tela_Login extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(campo_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLogar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -145,15 +154,10 @@ public class Tela_Login extends javax.swing.JFrame {
                     .addContainerGap(234, Short.MAX_VALUE)))
         );
 
-        botao_criar_conta.setBackground(new java.awt.Color(255, 255, 255));
-        botao_criar_conta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        botao_criar_conta.setLabel("CLIQUE AQUI");
-        botao_criar_conta.setName("botao_entrar"); // NOI18N
-        botao_criar_conta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botao_criar_contaActionPerformed(evt);
-            }
-        });
+        btnCriarConta.setBackground(new java.awt.Color(255, 255, 255));
+        btnCriarConta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnCriarConta.setLabel("CLIQUE AQUI");
+        btnCriarConta.setName("botao_entrar"); // NOI18N
 
         javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
         kGradientPanel2.setLayout(kGradientPanel2Layout);
@@ -167,7 +171,7 @@ public class Tela_Login extends javax.swing.JFrame {
                 .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(115, 115, 115)
-                        .addComponent(botao_criar_conta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(86, 86, 86)
                         .addGroup(kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -187,7 +191,7 @@ public class Tela_Login extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botao_criar_conta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(kGradientPanel2Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -209,59 +213,10 @@ public class Tela_Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-       
-        String cpf = campo_cpf.getText();
-        String senha = new String(campo_senha.getPassword());
-        Funcionario oFuncionario = new Funcionario(cpf, senha);
-        if (oFuncionario.logarClienteSistema(cpf, senha)) {
-            this.setVisible(false);
-        }
-    }//GEN-LAST:event_button1ActionPerformed
-
-    private void botao_criar_contaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_criar_contaActionPerformed
-        mostrarTelaCadastrarConta();
-    }//GEN-LAST:event_botao_criar_contaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tela_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tela_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tela_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela_Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Tela_Login().setVisible(true);
-            }
-        });
-    }
-
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button botao_criar_conta;
-    private java.awt.Button button1;
+    private java.awt.Button btnCriarConta;
+    private java.awt.Button btnLogar;
     private javax.swing.JTextField campo_cpf;
     private javax.swing.JPasswordField campo_senha;
     private javax.swing.JLabel jLabel1;
@@ -275,8 +230,4 @@ public class Tela_Login extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel2;
     // End of variables declaration//GEN-END:variables
 
-    private void mostrarTelaCadastrarConta() {
-        Tela_Cadastrar_Conta tela = new Tela_Cadastrar_Conta();
-        tela.setVisible(true);
-    }
 }

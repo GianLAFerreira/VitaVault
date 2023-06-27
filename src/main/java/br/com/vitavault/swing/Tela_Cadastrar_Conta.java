@@ -1,35 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package br.com.vitavault.swing;
 
-import br.com.vitavault.exceptions.GerenciadorClientesException;
-import br.com.vitavault.model.Funcionario;
-import br.com.vitavault.swing.padroesvisuais.JButtonArredondado;
-import br.com.vitavault.swing.padroesvisuais.JFormattedTextFieldArredondado;
-import br.com.vitavault.swing.padroesvisuais.JPasswordFieldArredondado;
-import br.com.vitavault.swing.padroesvisuais.TextFieldArredondado;
-import br.com.vitavault.validation.CadastroContaValidation;
-import br.com.vitavault.validation.impl.CadastroContaValidationImpl;
-
-import javax.swing.*;
 import java.awt.*;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
-/**
- * @author ariad
- */
 public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
 
-    private CadastroContaValidation cadastroContaValidation;
-
-
-    /**
-     * Creates new form Tela_Cadastrar_Conta
-     */
     public Tela_Cadastrar_Conta() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -38,10 +15,51 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
         int x = (screenSize.width - this.getSize().width) / 2;
         int y = (screenSize.height - this.getSize().height) / 2;
         this.setLocation(x, y);
-        cadastroContaValidation = new CadastroContaValidationImpl();
         setResizable(false);
     }
-
+    
+    public void adicionarAcaoCriarConta(ActionListener acao) {
+        btnCriarConta.addActionListener(acao);
+    }
+    
+    public String getNome() {
+        return campo_nome.getText().trim();
+    }
+    
+    public String getCpf() {
+        return campo_cpf.getText().trim();
+    }
+    
+    public String getEndereco() {
+        return campo_endereco.getText().trim();
+    }
+  
+    public String getTelefone() {
+        return campo_telefone.getText().trim();
+    }
+    
+    public String getSenha() {
+        return campo_senha.getText().trim();
+    }
+    
+    public void exibe() {
+        setVisible(true);
+    }
+    
+    public void resetarCampos() {
+        campo_cpf.setText("");
+        campo_endereco.setText("");
+        campo_nome.setText("");
+        campo_senha.setText("");
+        campo_telefone.setText("");
+    }
+    
+    public void alertaMensagens(java.util.List<String> mensagens) {
+        for (String mensagem : mensagens) {
+            JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,7 +71,7 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        botao_criar_conta = new java.awt.Button();
+        btnCriarConta = new java.awt.Button();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -65,7 +83,7 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
         campo_cpf = new javax.swing.JTextField();
         campo_endereco = new javax.swing.JTextField();
         campo_telefone = new javax.swing.JTextField();
-        campo_senha = new javax.swing.JTextField();
+        campo_senha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,14 +91,9 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
 
-        botao_criar_conta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        botao_criar_conta.setLabel("CRIAR CONTA");
-        botao_criar_conta.setName("botao_entrar"); // NOI18N
-        botao_criar_conta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botao_criar_contaActionPerformed(evt);
-            }
-        });
+        btnCriarConta.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnCriarConta.setLabel("CRIAR CONTA");
+        btnCriarConta.setName("botao_entrar"); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("CADASTRAR CONTA");
@@ -102,43 +115,18 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
 
         campo_nome.setBackground(new java.awt.Color(143, 166, 203));
         campo_nome.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        campo_nome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_nomeActionPerformed(evt);
-            }
-        });
 
         campo_cpf.setBackground(new java.awt.Color(143, 166, 203));
         campo_cpf.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        campo_cpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_cpfActionPerformed(evt);
-            }
-        });
 
         campo_endereco.setBackground(new java.awt.Color(143, 166, 203));
         campo_endereco.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        campo_endereco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_enderecoActionPerformed(evt);
-            }
-        });
 
         campo_telefone.setBackground(new java.awt.Color(143, 166, 203));
         campo_telefone.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        campo_telefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_telefoneActionPerformed(evt);
-            }
-        });
 
         campo_senha.setBackground(new java.awt.Color(143, 166, 203));
         campo_senha.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
-        campo_senha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campo_senhaActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,21 +149,21 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(campo_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(156, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(campo_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(campo_endereco, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(campo_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(167, 167, 167)
-                .addComponent(botao_criar_conta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(campo_telefone)
+                    .addComponent(jLabel9)
+                    .addComponent(campo_endereco)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(158, 158, 158))
+                    .addComponent(campo_senha))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -205,10 +193,10 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
                 .addComponent(campo_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(campo_senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(botao_criar_conta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(btnCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(252, 252, 252))
         );
 
@@ -232,94 +220,12 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campo_enderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_enderecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campo_enderecoActionPerformed
-
-    private void campo_cpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_cpfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campo_cpfActionPerformed
-
-    private void campo_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_nomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campo_nomeActionPerformed
-
-    private void botao_criar_contaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_criar_contaActionPerformed
-        String nome = campo_nome.getText().trim();
-        String cpfTexto = campo_cpf.getText().trim();
-        String endereco = campo_endereco.getText().trim();
-        String telefoneTexto = campo_telefone.getText().trim();
-        String senha = campo_senha.getText();
-
-        List<String> mensagens = cadastroContaValidation.validar(nome, cpfTexto, endereco, senha, telefoneTexto);
-
-        if (!mensagens.isEmpty()) {
-            alertaMensagens(mensagens);
-            return;
-        }
-
-        String cpf = cpfTexto;
-        String telefone = telefoneTexto;
-        Funcionario funcionario = new Funcionario(cpf, nome, endereco, telefone, senha);
-        try {
-            funcionario.cadastrarCliente(funcionario);
-            JOptionPane.showMessageDialog(this, "Conta criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        } catch (GerenciadorClientesException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao criar a conta: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_botao_criar_contaActionPerformed
-
-    private void campo_telefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_telefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campo_telefoneActionPerformed
-
-    private void campo_senhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_senhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campo_senhaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Tela_Cadastrar_Conta().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button botao_criar_conta;
+    private java.awt.Button btnCriarConta;
     private javax.swing.JTextField campo_cpf;
     private javax.swing.JTextField campo_endereco;
     private javax.swing.JTextField campo_nome;
-    private javax.swing.JTextField campo_senha;
+    private javax.swing.JPasswordField campo_senha;
     private javax.swing.JTextField campo_telefone;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -331,11 +237,5 @@ public class Tela_Cadastrar_Conta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
-
-    private void alertaMensagens(List<String> mensagens) {
-        for (String mensagem : mensagens) {
-            JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
 }
