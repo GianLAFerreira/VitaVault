@@ -8,13 +8,20 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class Estoque {
 
     private Set<ItemEstoque> itens;
+    private UUID id;
 
     public Estoque(Set<ItemEstoque> itens) {
         this.itens = itens;
+    }
+
+    public Estoque(Set<ItemEstoque> itens, UUID id) {
+        this.itens = itens;
+        this.id = id;
     }
 
     public void removerProduto(ItemEstoque itemEstoque) throws EstoqueException {
@@ -91,5 +98,13 @@ public class Estoque {
         }
 
         return movimentacaoEstoqueList;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

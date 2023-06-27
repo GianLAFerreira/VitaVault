@@ -5,7 +5,6 @@ import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
 import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.Funcionario;
 import br.com.vitavault.model.ItemEstoque;
-import br.com.vitavault.model.Papel;
 import br.com.vitavault.model.Produto;
 
 import java.time.LocalDate;
@@ -15,25 +14,23 @@ public class MovimentacaoEstoque {
     private UUID id;
     private ItemEstoque item;
     private Funcionario funcionario;
-    private Papel alcada;
     private LocalDate dataMovimentacao;
     private EnumTipoMovimentacao tipoMovimentacao;
     private Long quantidade;
     private final Estoque estoque;
 
-    private MovimentacaoEstoque(ItemEstoque item, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
+    private MovimentacaoEstoque(ItemEstoque item, Funcionario funcionario, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
         this.estoque = estoque;
         this.id = UUID.randomUUID();
         this.item = item;
         this.funcionario = funcionario;
-        this.alcada = alcada;
         this.dataMovimentacao = dataMovimentacao;
         this.tipoMovimentacao = tipoMovimentacao;
         this.quantidade = quantidade;
     }
 
-    public MovimentacaoEstoque(Produto produto, Funcionario funcionario, Papel alcada, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
-        this(new ItemEstoque(produto.getId(), produto, dataMovimentacao, 0L, tipoMovimentacao), funcionario, alcada, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
+    public MovimentacaoEstoque(Produto produto, Funcionario funcionario, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
+        this(new ItemEstoque(produto.getId(), produto, estoque, dataMovimentacao, 0L, tipoMovimentacao), funcionario, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
     }
 
     public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) throws MovimentacaoEstoqueException, EstoqueException {
@@ -119,5 +116,9 @@ public class MovimentacaoEstoque {
 
     public LocalDate getDataMovimentacao() {
         return dataMovimentacao;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 }

@@ -1,11 +1,19 @@
 package br.com.vitavault;
 
+import br.com.vitavault.dao.EstoqueRepository;
+import br.com.vitavault.dao.FuncionarioRepository;
+import br.com.vitavault.dao.ItemEstoqueRepository;
+import br.com.vitavault.dao.MovimentacaoEstoqueRepository;
+import br.com.vitavault.dao.impl.EstoqueRepositoryImpl;
 import br.com.vitavault.dao.impl.FuncionarioRepositoryImpl;
-import br.com.vitavault.dao.impl.PapelRepositoryImpl;
+import br.com.vitavault.dao.impl.ItemEstoqueRepositoryImpl;
+import br.com.vitavault.dao.impl.MovimentacaoEstoqueRepositoryImpl;
 import br.com.vitavault.dao.impl.ProdutoRepositoryImpl;
-import br.com.vitavault.domain.EnumNivelAcesso;
+import br.com.vitavault.domain.EnumTipoMovimentacao;
+import br.com.vitavault.domain.MovimentacaoEstoque;
+import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.Funcionario;
-import br.com.vitavault.model.Papel;
+import br.com.vitavault.model.ItemEstoque;
 import br.com.vitavault.model.Produto;
 import br.com.vitavault.model.ProdutoDepreciavel;
 import br.com.vitavault.model.ProdutoNaoDepreciavel;
@@ -13,21 +21,16 @@ import br.com.vitavault.model.ProdutoNaoDepreciavel;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
 
 //
-        //cria o produto
 
-//
-//        //Cria um estoque
-//        Estoque estoque = new Estoque(new HashSet<>());
-//
-//        //movimentação do estoque
-//        MovimentacaoEstoque movimentarEntrada =
-//                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.of(2023, 5, 1), EnumTipoMovimentacao.ENTRADA, 10L, estoque);
+////        //movimentação do estoque
+
 //
 //        MovimentacaoEstoque movimentarEntrada2 =
 //                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.of(2023, 5, 2), EnumTipoMovimentacao.ENTRADA, 5L, estoque);
@@ -36,7 +39,6 @@ public class Main {
 //                new MovimentacaoEstoque(produto, funcionarioGian, papel, LocalDate.of(2023, 5, 2), EnumTipoMovimentacao.SAIDA, 13L, estoque);
 //
 //        // -> chama erro que não existe no estoque
-////        ItemEstoque itemEstoque = new ItemEstoque(UUID.randomUUID(), produto, LocalDate.now(), 3L, EnumTipoMovimentacao.SAIDA);
 ////        movimentarEntrada.movimentarEstoque(itemEstoque, 50L, EnumTipoMovimentacao.SAIDA);
 //
 //
@@ -62,22 +64,52 @@ public class Main {
 //        estoque.listar();
 
 
-        rodarTesteFuncionarioNoBanco();
+        // rodarTesteFuncionarioNoBanco();
         //rodarTesteProdutosNoBnco();
-        //rodarTestePapelNoBanco();
+        //rodarTesteEstoqueNoBanco();
+        //rodarTesteItemEstoqueNoBanco();
+
+        EstoqueRepository estoqueRepository = new EstoqueRepositoryImpl();
+        ProdutoRepositoryImpl produtoRepository = new ProdutoRepositoryImpl();
+        FuncionarioRepository funcionarioRepository = new FuncionarioRepositoryImpl();
+        MovimentacaoEstoqueRepository movimentacaoEstoqueRepository = new MovimentacaoEstoqueRepositoryImpl();
+        ItemEstoqueRepository itemEstoqueRepository = new ItemEstoqueRepositoryImpl();
+        Produto produto = criarProduto();
+        Funcionario funcionario = criarFuncionario();
+        produtoRepository.gravar(produto);
+        funcionarioRepository.gravar(funcionario);
+
+
+        MovimentacaoEstoque movimentarEntrada =
+                new MovimentacaoEstoque(produto, funcionario, LocalDate.of(2023, 5, 1), EnumTipoMovimentacao.ENTRADA, 10L, estoqueRepository.buscarEstoque());
+        itemEstoqueRepository.gravar(movimentarEntrada.getItem());
+        movimentacaoEstoqueRepository.gravar(movimentarEntrada);
+
+
     }
 
-    private static void rodarTestePapelNoBanco() {
-        Papel papel = criarPapel();
+    private static void rodarTesteItemEstoqueNoBanco() {
+        ItemEstoqueRepository itemEstoqueRepository = new ItemEstoqueRepositoryImpl();
+        Produto produto = criarProduto();
+        ItemEstoque itemEstoque = new ItemEstoque(UUID.randomUUID(), produto, new EstoqueRepositoryImpl().buscarEstoque(), LocalDate.now(), 3L, EnumTipoMovimentacao.SAIDA);
+        ProdutoRepositoryImpl produtoRepository = new ProdutoRepositoryImpl();
 
-        PapelRepositoryImpl papelRepository = new PapelRepositoryImpl();
-        papelRepository.gravar(papel);
-        papelRepository.buscarPapel(papel.getId());
-        papelRepository.removerPapel(papel.getId());
+        produtoRepository.gravar(produto);
+
+        itemEstoqueRepository.gravar(itemEstoque);
     }
+
+    private static void rodarTesteEstoqueNoBanco() {
+        EstoqueRepository estoqueRepository = new EstoqueRepositoryImpl();
+//        estoqueRepository.gravar(estoque);
+
+        Estoque buscarEstoque = estoqueRepository.buscarEstoque();
+        System.out.println(buscarEstoque.getId());
+    }
+
 
     private static void rodarTesteFuncionarioNoBanco() {
-        Funcionario funcionarioGian = criarFuncionario(criarPapel());
+        Funcionario funcionarioGian = criarFuncionario();
         FuncionarioRepositoryImpl funcionarioRepository = new FuncionarioRepositoryImpl();
 
         funcionarioRepository.gravar(funcionarioGian);
@@ -113,13 +145,10 @@ public class Main {
                 "Produto criado para teste 2", new BigDecimal("200.00"), "A definir", true, LocalDate.now());
     }
 
-    private static Funcionario criarFuncionario(Papel papel) {
+    private static Funcionario criarFuncionario() {
         return new Funcionario("09017144963", "Gian", "RUa 1", "47991061875",
                 "123");
     }
 
-    private static Papel criarPapel() {
-        return new Papel(EnumNivelAcesso.DIGITADOR, "Teste");
-    }
 
 }
