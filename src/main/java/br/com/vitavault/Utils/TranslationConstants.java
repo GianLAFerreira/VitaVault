@@ -23,8 +23,10 @@ public class TranslationConstants {
     public static final String CATEGORIA_PRODUTO_OBRIGATORIO = "vita_vault.categoria_produto_obrigatorio";
     public static final String DATA_MOVIMENTACAO_INVALIDA = "vita_vault.data_movimentacao_invalida";
     public static final String QUANTIDADE_MOVIMENTACAO_INVALIDA = "vita_vault.quantidade_movimentacao_invalida";
-    public static final String CPF_EXISTE_CADASTRADO = "vita_vault.cpf_existe_cadastrado";
-    
+    public static final String CPF_JA_CADASTRADO = "vita_vault.cpf_ja_cadastrado";
+    public static final String CPF_NAO_CADASTRADO = "vita_vault.cpf_nao_cadastrado";
+    public static final String SENHA_INVALIDA = "vita_vault.senha_invalida";
+
     public static String getMessage(String key) {
         if (messages == null) {
             messages = ResourceBundle.getBundle("resources.translation.vita_vault");

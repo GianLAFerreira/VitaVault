@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.vitavault.swing;
+package br.com.vitavault.view;
 
 import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.ItemEstoque;
@@ -15,13 +15,13 @@ import java.util.List;
 /**
  * @author lucas
  */
-public class HomeConsulta extends javax.swing.JFrame {
+public class ConsultaMovimentacaoView extends javax.swing.JFrame {
     private Estoque estoqueService;
 
     /**
      * Creates new form HomeConsulta
      */
-    public HomeConsulta(Estoque estoque) {
+    public ConsultaMovimentacaoView(Estoque estoque) {
         initComponents();
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -31,7 +31,7 @@ public class HomeConsulta extends javax.swing.JFrame {
 
         estoqueService = estoque;
     }
-    
+
     public void exibe() {
         setVisible(true);
     }

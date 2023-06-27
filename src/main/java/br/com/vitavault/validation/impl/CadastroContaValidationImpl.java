@@ -2,13 +2,21 @@ package br.com.vitavault.validation.impl;
 
 import br.com.vitavault.Utils.TranslationConstants;
 import br.com.vitavault.Utils.Utils;
-import br.com.vitavault.model.Funcionario;
+import br.com.vitavault.dao.FuncionarioRepository;
+import br.com.vitavault.dao.impl.FuncionarioRepositoryImpl;
 import br.com.vitavault.validation.CadastroContaValidation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CadastroContaValidationImpl implements CadastroContaValidation {
+    private FuncionarioRepository funcionarioRepository;
+
+    public CadastroContaValidationImpl() {
+        this.funcionarioRepository = new FuncionarioRepositoryImpl();
+    }
+
     @Override
     public List<String> validar(String nome, String cpfTexto, String endereco, String senha, String telefoneTexto) {
         List<String> mensagens = new ArrayList();
@@ -17,11 +25,22 @@ public class CadastroContaValidationImpl implements CadastroContaValidation {
         validarTelefone(telefoneTexto, mensagens);
         validarEndereco(endereco, mensagens);
         validarSenha(senha, mensagens);
-        validaCpfExisteCadastro(cpfTexto, senha, mensagens);
-        
+        validaCpfCadastrado(cpfTexto, mensagens);
+
         return mensagens;
     }
-    
+
+    public List<String> validar(String cpfTexto, String senha) {
+        List<String> mensagens = new ArrayList();
+
+        validaCpfNaoCadastrado(cpfTexto, mensagens);
+        if (mensagens.isEmpty()) {
+            validarSenhaValida(cpfTexto, senha, mensagens);
+        }
+
+        return mensagens;
+    }
+
     private void validarNome(String nome, List<String> mensagens) {
         if (nome.isEmpty()) {
             mensagens.add(TranslationConstants.getMessage(TranslationConstants.NOME_OBRIGATORIO));
@@ -96,11 +115,23 @@ public class CadastroContaValidationImpl implements CadastroContaValidation {
         // Verifica o segundo dígito de verificação
         return resto == Character.getNumericValue(cpf.charAt(10));
     }
-    
-    private void validaCpfExisteCadastro(String cpf, String senha, List<String> mensagens) {
-        if(Funcionario.verificarClienteCadastradoSistema(cpf, senha)){
-            mensagens.add(TranslationConstants.getMessage(TranslationConstants.CPF_EXISTE_CADASTRADO));
+
+    private void validaCpfCadastrado(String cpf, List<String> mensagens) {
+        if (!Objects.isNull(funcionarioRepository.buscarFuncionarioByCPF(cpf))) {
+            mensagens.add(TranslationConstants.getMessage(TranslationConstants.CPF_JA_CADASTRADO));
         }
     }
-    //verificar se isso esta funcionando
+
+    private void validaCpfNaoCadastrado(String cpf, List<String> mensagens) {
+        if (Objects.isNull(funcionarioRepository.buscarFuncionarioByCPF(cpf))) {
+            mensagens.add(TranslationConstants.getMessage(TranslationConstants.CPF_NAO_CADASTRADO));
+        }
+    }
+
+    private void validarSenhaValida(String cpf, String senha, List<String> mensagens) {
+        if (Objects.isNull(funcionarioRepository.buscarFuncionarioByCPFAndSenha(cpf, senha))) {
+            mensagens.add(TranslationConstants.getMessage(TranslationConstants.SENHA_INVALIDA));
+        }
+    }
+
 }

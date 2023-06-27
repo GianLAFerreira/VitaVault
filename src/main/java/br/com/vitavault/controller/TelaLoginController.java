@@ -1,72 +1,84 @@
-
 package br.com.vitavault.controller;
 
 import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.Funcionario;
-import br.com.vitavault.swing.HomePage_1;
-import br.com.vitavault.swing.Tela_Cadastrar_Conta;
-import br.com.vitavault.swing.Tela_Login;
+import br.com.vitavault.validation.CadastroContaValidation;
+import br.com.vitavault.validation.impl.CadastroContaValidationImpl;
+import br.com.vitavault.view.CadastrarContaView;
+import br.com.vitavault.view.HomePageView;
+import br.com.vitavault.view.LoginView;
+
 import java.util.HashSet;
+import java.util.List;
 
 public class TelaLoginController {
-    private Tela_Login oTelaLogin;
-    private Funcionario oFuncionarioLogado;
-    private Tela_Cadastrar_Conta oTelaCadastrarConta;
+    private LoginView loginView;
+    private CadastrarContaView cadastrarContaView;
+    private CadastroContaController cadastroContaController;
+    private CadastroContaValidation cadastroContaValidation;
     private Estoque estoque;
-    
+    private TelaHomeController telaHomeController;
+
     public Estoque getEstoque() {
         return estoque;
     }
-    
-    public Funcionario getFuncionarioLogado() {
-        return oFuncionarioLogado;
+
+    public String getCpf() {
+        return loginView.getCpf();
     }
-   
-    public TelaLoginController(Tela_Login oTelaLogin) {
-        this.oTelaLogin = oTelaLogin;
+
+    public String getSenha() {
+        return loginView.getSenha();
+    }
+
+    public TelaLoginController() {
+        this.loginView = new LoginView();
+        this.cadastrarContaView = new CadastrarContaView();
+        this.cadastroContaController = new CadastroContaController(cadastrarContaView);
+        this.telaHomeController = new TelaHomeController(new HomePageView(criarEstoque()), this);
+        this.cadastroContaValidation = new CadastroContaValidationImpl();
         inicializarBotoesLogin();
     }
-    
+
     public void inicializarBotoesLogin() {
-        oTelaLogin.adicionarAcaoBotaoCadastrarUsuario((a) -> exibeTelaCadastroUsuario(new Tela_Cadastrar_Conta()));
-        oTelaLogin.adicionarAcaoBotaoLogar((a) -> exibeTelaHome());
+        loginView.adicionarAcaoBotaoCadastrarUsuario((a) -> exibeTelaCadastroConta());
+        loginView.adicionarAcaoBotaoLogar((a) -> exibeTelaHome());
     }
-    
-    private void exibeTelaCadastroUsuario(Tela_Cadastrar_Conta oTelaCadastrarConta) {
-        this.oTelaCadastrarConta = oTelaCadastrarConta;
-        TelaCadastroUsuarioController oTelaCadastrarContaController = new TelaCadastroUsuarioController(oTelaCadastrarConta);
-        oTelaCadastrarContaController.exibirTela();
+
+    private void exibeTelaCadastroConta() {
+        cadastroContaController.exibirTela();
     }
-    
+
     private void exibeTelaHome() {
-        if(verificaUsuarioCadastrado()) {
-            oTelaLogin.dispose();
-            oTelaLogin.resetarCamposLogin();
-            TelaHomeController oTelaController = new TelaHomeController(new HomePage_1(new Funcionario(oTelaLogin.getCpf(), oTelaLogin.getSenha()), criarEstoque()), this);
-            oTelaController.exibirTela();
+        if (Boolean.TRUE.equals(validarLogin(getCpf(), getSenha()))) {
+            loginView.dispose();
+            loginView.resetarCamposLogin();
+            telaHomeController.exibirTela();
         }
     }
-    
+
+    private Boolean validarLogin(String cpf, String senha) {
+        List<String> mensagens = cadastroContaValidation.validar(cpf, senha);
+
+        if (!mensagens.isEmpty()) {
+            cadastrarContaView.alertaMensagens(mensagens);
+            return false;
+        }
+        return true;
+    }
+
     private Estoque criarEstoque() {
         Estoque oEstoque = new Estoque(new HashSet<>());
         estoque = oEstoque;
         return oEstoque;
     }
-   
-    private boolean verificaUsuarioCadastrado() {
-        String cpf = oTelaLogin.getCpf();
-        String senha = oTelaLogin.getSenha();
-        
-        return Funcionario.verificarClienteCadastradoSistema(cpf, senha);
-    }
-    
+
     public void exibe() {
-        oTelaLogin.exibe();
+        loginView.exibe();
     }
-    
+
     public static void main(String[] args) {
-        TelaLoginController oTela = new TelaLoginController(new Tela_Login());
-        oTela.exibe();
+        TelaLoginController tela = new TelaLoginController();
+        tela.exibe();
     }
 }
 

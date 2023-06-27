@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package br.com.vitavault.swing;
+package br.com.vitavault.view;
 
 import br.com.vitavault.Utils.Utils;
 import br.com.vitavault.domain.EnumNivelAcesso;
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 /**
  * @author lucas
  */
-public class HomeMovimentacao extends javax.swing.JFrame {
+public class MovimentacaoView extends javax.swing.JFrame {
 
     private MovimentacaoEstoqueValidation movimentacaoEstoqueValidation;
     private Funcionario funcionarioLogado;
@@ -40,7 +40,7 @@ public class HomeMovimentacao extends javax.swing.JFrame {
     /**
      * Creates new form HomeConsulta
      */
-    public HomeMovimentacao(Funcionario funcionario, Estoque estoque) {
+    public MovimentacaoView(Funcionario funcionario, Estoque estoque) {
         initComponents();
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -53,10 +53,11 @@ public class HomeMovimentacao extends javax.swing.JFrame {
 
         estoqueService = estoque;
     }
-    
+
     public void exibe() {
         setVisible(true);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -304,7 +305,7 @@ public class HomeMovimentacao extends javax.swing.JFrame {
             this.dispose();
         } catch (MovimentacaoEstoqueException | EstoqueException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao movimentar o estoque: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(Tela_Cadastrar_Conta.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CadastrarContaView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed

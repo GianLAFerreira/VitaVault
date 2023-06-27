@@ -1,6 +1,6 @@
 package br.com.vitavault.model;
 
-import br.com.vitavault.exceptions.GerenciadorClientesException;
+import br.com.vitavault.exceptions.GerenciadorFuncionariosException;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -109,12 +109,12 @@ public abstract class Produto {
         this.situacao = situacao;
     }
 
-    public void cadastrarProduto(Produto produto) throws GerenciadorClientesException {
+    public void cadastrarProduto(Produto produto) throws GerenciadorFuncionariosException {
         if (verificarProdutoExiste(produto)) {
             produtos.put(produto.getId(), produto);
             System.out.printf(Produto.separador() + "Produto \n Nome: %s \n Descricao: %s \n Codigo: %s \n Preço: %s \n Categoria: %s \n Cadastrado com sucesso" + Funcionario.separador(), produto.getNome(), produto.getDescricao(), produto.getCodigo(), produto.getPreco(), produto.getCategoria());
         } else {
-            throw new GerenciadorClientesException("Erro teste");
+            throw new GerenciadorFuncionariosException("Erro teste");
         }
     }
 
