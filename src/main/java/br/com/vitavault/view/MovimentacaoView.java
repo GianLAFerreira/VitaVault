@@ -4,56 +4,71 @@
  */
 package br.com.vitavault.view;
 
-import br.com.vitavault.Utils.Utils;
 import br.com.vitavault.domain.EnumTipoMovimentacao;
-import br.com.vitavault.domain.MovimentacaoEstoque;
-import br.com.vitavault.exceptions.EstoqueException;
-import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
-import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.Funcionario;
 import br.com.vitavault.model.Produto;
-import br.com.vitavault.validation.MovimentacaoEstoqueValidation;
-import br.com.vitavault.validation.impl.MovimentacaoEstoqueValidationImpl;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author lucas
  */
 public class MovimentacaoView extends javax.swing.JFrame {
 
-    private MovimentacaoEstoqueValidation movimentacaoEstoqueValidation;
-    private Funcionario funcionarioLogado;
-    private Estoque estoqueService;
-
     /**
      * Creates new form HomeConsulta
      */
-    public MovimentacaoView(Funcionario funcionario, Estoque estoque) {
+    public MovimentacaoView() {
         initComponents();
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (screenSize.width - this.getSize().width) / 2;
         int y = (screenSize.height - this.getSize().height) / 2;
         this.setLocation(x, y);
-
-        movimentacaoEstoqueValidation = new MovimentacaoEstoqueValidationImpl();
-        funcionarioLogado = funcionario;
-
-        estoqueService = estoque;
     }
 
-    public void exibe() {
-        setVisible(true);
+    public void adicionarAcaoMovimentarEstoque(ActionListener acao) {
+        bota_movimentar_produto.addActionListener(acao);
+    }
+
+    public Produto getProduto() {
+        return (Produto) campo_produto.getSelectedItem();
+    }
+
+    public String getData() {
+        return campo_data.getText().trim();
+    }
+
+    public String getMotivo() {
+        return campo_motivo.getSelectedItem().toString();
+    }
+
+    public String getQuantidade() {
+        return campo_quantidade.getText().trim();
+    }
+
+    public EnumTipoMovimentacao getTipoMovimentacao() {
+        return (EnumTipoMovimentacao) campo_tipo_movimentacao.getSelectedItem();
+    }
+
+    public void alertaMensagens(List<String> mensagens) {
+        for (String mensagem : mensagens) {
+            JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void popularCampoProduto(List<Produto> produtos) {
+        for (Produto produto : produtos) {
+            campo_produto.addItem(produto);
+        }
+    }
+
+    public void limparCampos() {
+        campo_produto.removeAllItems();
     }
 
     /**
@@ -123,54 +138,18 @@ public class MovimentacaoView extends javax.swing.JFrame {
 
         jLabel3.setText("Selecione o produto:");
 
-        for (Map.Entry<UUID, Produto> entry : Produto.getProdutos().entrySet()) {
-            campo_produto.addItem(entry.getValue());
-        }
-
-        campo_produto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxProdutoActionPerformed(evt);
-            }
-        });
 
         label_tipo_movimentacao.setText("Tipo de movimentação:");
 
         campo_tipo_movimentacao.setModel(new javax.swing.DefaultComboBoxModel<>(new EnumTipoMovimentacao[]{EnumTipoMovimentacao.ENTRADA, EnumTipoMovimentacao.SAIDA}));
-        campo_tipo_movimentacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
 
         label_motivo.setText("Motivo da movimentação:");
 
         campo_motivo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Compra de material", "Venda", "Cortesia", "Doação"}));
-        campo_motivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
-            }
-        });
 
         label_quantidade.setText("Quantidade:");
 
-        campo_quantidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         bota_movimentar_produto.setText("Movimentar produto");
-        bota_movimentar_produto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botao_movimentar_produtoActionPerformed(evt);
-            }
-        });
-
-        campo_data.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         try {
             MaskFormatter dateFormatter = new MaskFormatter("##/##/####");
@@ -254,64 +233,6 @@ public class MovimentacaoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBoxProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void botao_movimentar_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Produto produto = (Produto) campo_produto.getSelectedItem();
-        String data = campo_data.getText().trim();
-        String motivo = campo_motivo.getSelectedItem().toString();
-        String quantidade = campo_quantidade.getText().trim();
-        EnumTipoMovimentacao tipoMovimentacao = (EnumTipoMovimentacao) campo_tipo_movimentacao.getSelectedItem();
-
-
-        List<String> mensagens = movimentacaoEstoqueValidation.validar(data, quantidade);
-
-        if (!mensagens.isEmpty()) {
-            alertaMensagens(mensagens);
-            return;
-        }
-
-
-        LocalDate dataFormatada = Utils.formatarData(data);
-        Long quantidadeFormatada = Utils.formatarQuantidade(quantidade);
-        MovimentacaoEstoque movimentacaoEstoque
-                = new MovimentacaoEstoque(produto,
-                funcionarioLogado,
-                dataFormatada,
-                tipoMovimentacao,
-                quantidadeFormatada,
-                estoqueService);
-
-        try {
-            movimentacaoEstoque.movimentarEstoque(movimentacaoEstoque.getItem(), movimentacaoEstoque.getQuantidade(), movimentacaoEstoque.getTipoMovimentacao());
-            JOptionPane.showMessageDialog(this, "Estoque movimentado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        } catch (MovimentacaoEstoqueException | EstoqueException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao movimentar o estoque: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(CadastrarContaView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -337,10 +258,4 @@ public class MovimentacaoView extends javax.swing.JFrame {
     private javax.swing.JTextField campo_quantidade;
 
     // End of variables declaration//GEN-END:variables
-
-    private void alertaMensagens(List<String> mensagens) {
-        for (String mensagem : mensagens) {
-            JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 }

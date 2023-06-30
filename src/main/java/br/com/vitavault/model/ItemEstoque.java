@@ -28,7 +28,12 @@ public class ItemEstoque {
         this.tipoMovimentacao = tipoMovimentacao;
     }
 
-    public ItemEstoque() {
+    public ItemEstoque(Produto produto, Estoque estoque, LocalDate data, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) {
+        this.produto = produto;
+        this.estoque = estoque;
+        this.data = data;
+        this.quantidade = quantidade;
+        this.tipoMovimentacao = tipoMovimentacao;
     }
 
     public UUID getId() {
@@ -82,5 +87,9 @@ public class ItemEstoque {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

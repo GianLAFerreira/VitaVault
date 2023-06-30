@@ -1,20 +1,37 @@
 package br.com.vitavault.dao.impl;
 
 import br.com.vitavault.dao.ConexaoBD;
+import br.com.vitavault.dao.EstoqueRepository;
+import br.com.vitavault.dao.FuncionarioRepository;
 import br.com.vitavault.dao.MovimentacaoEstoqueRepository;
+import br.com.vitavault.dao.ProdutoRepository;
+import br.com.vitavault.domain.EnumTipoMovimentacao;
 import br.com.vitavault.domain.MovimentacaoEstoque;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import static br.com.vitavault.dao.ConexaoBD.conectar;
 
 public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRepository {
+
+    private ProdutoRepository produtoRepository;
+    private FuncionarioRepository funcionarioRepository;
+    private EstoqueRepository estoqueRepository;
+
     public MovimentacaoEstoqueRepositoryImpl() {
         createTable();
+        produtoRepository = new ProdutoRepositoryImpl();
+        funcionarioRepository = new FuncionarioRepositoryImpl();
+        estoqueRepository = new EstoqueRepositoryImpl();
     }
 
     @Override
@@ -57,6 +74,13 @@ public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRep
 
             pstmt.executeUpdate();
 
+            ResultSet resultSet = pstmt.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                UUID id = (UUID) resultSet.getObject(1);
+                movimentacaoEstoque.setId(id);
+            }
+
             System.out.println("Gravou a movimentacao estoque com sucesso no banco");
 
             return true;
@@ -66,5 +90,51 @@ public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRep
         } finally {
             ConexaoBD.descontecar();
         }
+    }
+
+    @Override
+    public List<MovimentacaoEstoque> buscarMovimentacoes(UUID id) {
+        List<MovimentacaoEstoque> movimentacaoEstoqueList = new ArrayList<>();
+        MovimentacaoEstoque movimentacaoEstoque = null;
+
+        String sql = "SELECT * FROM movimentacaoestoque where item = ?";
+
+        try (Connection conn = conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setObject(1, id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                UUID idcoluna = UUID.fromString(rs.getString("id"));
+                UUID item = UUID.fromString(rs.getString("item"));
+                UUID funcionario = UUID.fromString(rs.getString("funcionario"));
+                LocalDate dataMovimentacao = rs.getDate("dataMovimentacao").toLocalDate();
+                EnumTipoMovimentacao tipoMovimentacao = EnumTipoMovimentacao.valueOf(rs.getString("tipoMovimentacao"));
+                Long quantidade = rs.getLong("quantidade");
+
+
+                movimentacaoEstoque = new MovimentacaoEstoque(
+                        idcoluna,
+                        produtoRepository.buscarProduto(item)
+                        , funcionarioRepository.buscarFuncionario(funcionario)
+                        , dataMovimentacao
+                        , tipoMovimentacao
+                        , quantidade
+                        , estoqueRepository.buscarEstoque());
+
+
+                movimentacaoEstoqueList.add(movimentacaoEstoque);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+            ConexaoBD.descontecar();
+        }
+        System.out.println("Produtos encontrado com sucesso");
+        return movimentacaoEstoqueList;
     }
 }

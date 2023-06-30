@@ -10,7 +10,6 @@ import br.com.vitavault.dao.impl.ItemEstoqueRepositoryImpl;
 import br.com.vitavault.dao.impl.MovimentacaoEstoqueRepositoryImpl;
 import br.com.vitavault.dao.impl.ProdutoRepositoryImpl;
 import br.com.vitavault.domain.EnumTipoMovimentacao;
-import br.com.vitavault.domain.MovimentacaoEstoque;
 import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.Funcionario;
 import br.com.vitavault.model.ItemEstoque;
@@ -80,10 +79,10 @@ public class Main {
         funcionarioRepository.gravar(funcionario);
 
 
-        MovimentacaoEstoque movimentarEntrada =
-                new MovimentacaoEstoque(produto, funcionario, LocalDate.of(2023, 5, 1), EnumTipoMovimentacao.ENTRADA, 10L, estoqueRepository.buscarEstoque());
-        itemEstoqueRepository.gravar(movimentarEntrada.getItem());
-        movimentacaoEstoqueRepository.gravar(movimentarEntrada);
+//        MovimentacaoEstoque movimentarEntrada =
+//                new MovimentacaoEstoque(produto, funcionario, LocalDate.of(2023, 5, 1), EnumTipoMovimentacao.ENTRADA, 10L, estoqueRepository.buscarEstoque());
+//        itemEstoqueRepository.gravar(movimentarEntrada.getItem());
+//        movimentacaoEstoqueRepository.gravar(movimentarEntrada);
 
 
     }

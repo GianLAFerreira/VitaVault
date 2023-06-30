@@ -1,19 +1,12 @@
 package br.com.vitavault.view;
 
-import br.com.vitavault.exceptions.GerenciadorFuncionariosException;
-import br.com.vitavault.model.Produto;
-import br.com.vitavault.model.ProdutoDepreciavel;
-import br.com.vitavault.model.ProdutoNaoDepreciavel;
 import br.com.vitavault.validation.CadastroProdutoValidation;
 import br.com.vitavault.validation.impl.CadastroProdutoValidationImpl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CadastroProdutoView extends javax.swing.JFrame {
 
@@ -29,15 +22,53 @@ public class CadastroProdutoView extends javax.swing.JFrame {
         cadastroProdutoValidation = new CadastroProdutoValidationImpl();
     }
 
+    public void adicionarAcaoAdicionarProduto(ActionListener acao) {
+        botaoAdicionarProduto.addActionListener(acao);
+    }
+
+    public String getNomeProduto() {
+        return campoNomeProduto.getText().trim();
+    }
+
+    public String getDescricaoProduto() {
+        return campoDescricaoProduto.getText().trim();
+    }
+
+    public String getCodigoProduto() {
+        return campoCodigoProduto.getText().trim();
+    }
+
+    public String getPrecoProduto() {
+        return campoPrecoProduto.getText().trim();
+    }
+
+    public String getCategoriaProduto() {
+        return campoCategoriaProduto.getText().trim();
+    }
+
+    public String getDataValidadeProduto() {
+        return campoDataValidadeProduto.getText().trim();
+    }
+
     public void exibe() {
         setVisible(true);
     }
 
-    private void alertaMensagens(List<String> mensagens) {
+    public void resetarCampos() {
+        campoNomeProduto.setText("");
+        campoDescricaoProduto.setText("");
+        campoCodigoProduto.setText("");
+        campoPrecoProduto.setText("");
+        campoCategoriaProduto.setText("");
+        campoDataValidadeProduto.setText("");
+    }
+
+    public void alertaMensagens(List<String> mensagens) {
         for (String mensagem : mensagens) {
             JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,72 +132,16 @@ public class CadastroProdutoView extends javax.swing.JFrame {
                                 .addGap(27, 27, 27))
         );
 
-        campoNomeProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
         labelNomeProduto.setText("Nome do Produto");
-
         labelDataValidadeProduto.setText("Data de Validade (opcional)");
-
         campoDataValidadeProduto.setForeground(new java.awt.Color(204, 204, 204));
         campoDataValidadeProduto.setText("dd/mm/aa");
-        campoDataValidadeProduto.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                jTextField3ComponentAdded(evt);
-            }
-        });
-        campoDataValidadeProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        campoDataValidadeProduto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField3KeyTyped(evt);
-            }
-        });
 
         botaoAdicionarProduto.setText("Adicionar Produto");
-        botaoAdicionarProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAdicionarProdutoActionPerformed(evt);
-            }
-        });
-
-        campoCodigoProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-
         labelCodigoProduto.setText("Codigo do Produto");
-
-        campoDescricaoProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
         labelPrecoProduto.setText("Preço do Produto");
-
         labelDescricaoProduto.setText("Descrição do Produto");
-
         labelCategoriaProduto.setText("Categoria do Produto");
-
-        campoCategoriaProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
-            }
-        });
-
-        campoPrecoProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -242,77 +217,6 @@ public class CadastroProdutoView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jTextField3ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTextField3ComponentAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ComponentAdded
-
-    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
-
-    }//GEN-LAST:event_jTextField3KeyTyped
-
-    private void botaoAdicionarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String nomeProduto = campoNomeProduto.getText().trim();
-        String descricaoProduto = campoDescricaoProduto.getText().trim();
-        String codigoProduto = campoCodigoProduto.getText().trim();
-        String precoProduto = campoPrecoProduto.getText().trim();
-        String categoriaProduto = campoCategoriaProduto.getText().trim();
-        String dataValidadeProduto = campoDataValidadeProduto.getText();
-
-
-        List<String> mensagens = cadastroProdutoValidation.validar(nomeProduto, descricaoProduto, codigoProduto, precoProduto, categoriaProduto);
-
-        if (!mensagens.isEmpty()) {
-            alertaMensagens(mensagens);
-            return;
-        }
-
-        Produto produto = getProduto(nomeProduto, descricaoProduto, codigoProduto, precoProduto, categoriaProduto, dataValidadeProduto);
-
-
-        try {
-            produto.cadastrarProduto(produto);
-            JOptionPane.showMessageDialog(this, "Produto criado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        } catch (GerenciadorFuncionariosException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao criar o Produto: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(CadastrarContaView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private Produto getProduto(String nomeProduto, String descricaoProduto, String codigoProduto, String precoProduto, String categoriaProduto, String dataValidadeProduto) {
-        if (dataValidadeProduto.isEmpty()) {
-            return new ProdutoNaoDepreciavel(Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true);
-        } else {
-            return new ProdutoDepreciavel(Integer.parseInt(codigoProduto), nomeProduto, descricaoProduto, new BigDecimal(precoProduto), categoriaProduto, true, LocalDate.now());
-        }
-    }
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
-
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAdicionarProduto;

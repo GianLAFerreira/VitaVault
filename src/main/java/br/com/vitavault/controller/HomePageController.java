@@ -1,28 +1,36 @@
 package br.com.vitavault.controller;
 
 import br.com.vitavault.dao.FuncionarioRepository;
+import br.com.vitavault.dao.ProdutoRepository;
 import br.com.vitavault.dao.impl.FuncionarioRepositoryImpl;
+import br.com.vitavault.dao.impl.ProdutoRepositoryImpl;
 import br.com.vitavault.domain.MovimentacaoEstoque;
 import br.com.vitavault.model.Funcionario;
-import br.com.vitavault.view.CadastroProdutoView;
-import br.com.vitavault.view.ConsultaMovimentacaoView;
+import br.com.vitavault.model.Produto;
 import br.com.vitavault.view.HomePageView;
-import br.com.vitavault.view.MovimentacaoView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
 
-public class TelaHomeController {
+public class HomePageController {
     private HomePageView homePageView;
-    private TelaLoginController telaLoginController;
+    private LoginController loginController;
     private FuncionarioRepository funcionarioRepository;
     private Funcionario funcionario;
+    private CadastroProdutoController cadastroProdutoController;
+    private ConsultaMovimentacaoController consultaMovimentacaoController;
+    private MovimentacaoController movimentacaoController;
+    private ProdutoRepository produtoRepository;
 
-    public TelaHomeController(HomePageView homePageView, TelaLoginController telaLoginController) {
+    public HomePageController(HomePageView homePageView, LoginController loginController) {
         this.homePageView = homePageView;
-        this.telaLoginController = telaLoginController;
+        this.loginController = loginController;
         this.funcionarioRepository = new FuncionarioRepositoryImpl();
+        cadastroProdutoController = new CadastroProdutoController();
+        consultaMovimentacaoController = new ConsultaMovimentacaoController();
+        movimentacaoController = new MovimentacaoController(this);
+        produtoRepository = new ProdutoRepositoryImpl();
         inicializarBotoes();
     }
 
@@ -35,21 +43,22 @@ public class TelaHomeController {
     }
 
     private void exibeTelaConsultaEstoque() {
-        new ConsultaMovimentacaoView(telaLoginController.getEstoque()).exibe();
+        consultaMovimentacaoController.exibe();
     }
 
     private void exibeTelaMovimentaoEstoque() {
-        new MovimentacaoView(funcionario, telaLoginController.getEstoque()).exibe();
-        // --ajustar depois para buscar o funcionario logado
+        movimentacaoController.retornaMovimentacaoView().limparCampos();
+        movimentacaoController.retornaMovimentacaoView().popularCampoProduto(getProdutos());
+        movimentacaoController.exibe();
     }
 
     private void exibeTelaCadastroProduto() {
-        new CadastroProdutoView().exibe();
+        cadastroProdutoController.exibe();
     }
 
     private void sairTelaHome() {
         homePageView.dispose();
-        telaLoginController.exibe();
+        loginController.exibe();
     }
 
     private void atualizarTabelaMovimentacoesEstoque() {
@@ -57,7 +66,7 @@ public class TelaHomeController {
         DefaultTableModel tableModel = (DefaultTableModel) tabela.getModel();
         tableModel.setRowCount(0); // Limpar as linhas existentes
 
-        List<MovimentacaoEstoque> produtos = telaLoginController.getEstoque().getMovimentacoes();
+        List<MovimentacaoEstoque> produtos = loginController.getEstoque().getMovimentacoes();
 
         for (MovimentacaoEstoque movimentacao : produtos) {
             Object[] rowData = {
@@ -73,6 +82,14 @@ public class TelaHomeController {
 
     public void exibirTela() {
         homePageView.exibe();
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionarioRepository.buscarFuncionarioByCPF(loginController.getCpf());
+    }
+
+    public List<Produto> getProdutos() {
+        return produtoRepository.listarProdutos();
     }
 
 }
