@@ -2,13 +2,13 @@ package br.com.vitavault.controller;
 
 import br.com.vitavault.dao.EstoqueRepository;
 import br.com.vitavault.dao.impl.EstoqueRepositoryImpl;
+import br.com.vitavault.model.Estoque;
 import br.com.vitavault.model.ItemEstoque;
 import br.com.vitavault.view.ConsultaMovimentacaoView;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConsultaMovimentacaoController {
 
@@ -28,10 +28,13 @@ public class ConsultaMovimentacaoController {
     private void atualizarTabelaMovimentacoesEstoque(JTable tabela) {
         DefaultTableModel tableModel = (DefaultTableModel) tabela.getModel();
         tableModel.setRowCount(0); // Limpar as linhas existentes
+        
+        Estoque estoque = estoqueRepository.buscarEstoque();
+       
+       List<ItemEstoque> itemEstoque = estoqueRepository.buscarItensEstoquePeloEstoque(estoque.getId());
+        
 
-        List<ItemEstoque> produtos = new ArrayList<>(); //estoqueRepository.(); aqui ajustar para buscar os itens do estoque
-
-        for (ItemEstoque movimentacao : produtos) {
+        for (ItemEstoque movimentacao : itemEstoque) {
             Object[] rowData = {
                     movimentacao.getProduto(),
                     movimentacao.getQuantidade(),
