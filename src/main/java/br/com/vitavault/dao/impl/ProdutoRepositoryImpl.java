@@ -80,6 +80,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepository {
                 UUID id = (UUID) resultSet.getObject(1);
                 produto.setId(id);
             }
+
             System.out.println("Gravou o Produto com sucesso no banco");
 
             return true;

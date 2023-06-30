@@ -24,7 +24,7 @@ public class MainAri {
         oFuncionario.cadastrarFuncionario(oFuncionario);
         Funcionario.listarClientes();
         criarProduto();
-        Produto.imprimeProdutosLista();
+//        Produto.imprimeProdutosLista();
 
     }
 

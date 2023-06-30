@@ -1,10 +1,11 @@
 package br.com.vitavault.model;
 
+import br.com.vitavault.dao.ProdutoRepository;
+import br.com.vitavault.dao.impl.ProdutoRepositoryImpl;
 import br.com.vitavault.exceptions.GerenciadorFuncionariosException;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -16,7 +17,7 @@ public abstract class Produto {
     private BigDecimal preco;
     private String categoria;
     private boolean situacao;
-    private static Map<UUID, Produto> produtos = new HashMap<>();
+    private ProdutoRepository produtoRepository;
 
     protected Produto(UUID id, int codigo, String nome, String descricao, BigDecimal preco, String categoria, boolean situacao) {
         this.id = id;
@@ -26,7 +27,7 @@ public abstract class Produto {
         this.preco = preco;
         this.categoria = categoria;
         this.situacao = situacao;
-        this.adicionarProdutosLista();
+        produtoRepository = new ProdutoRepositoryImpl();
     }
 
     protected Produto(int codigo, String nome, String descricao, BigDecimal preco, String categoria, boolean situacao) {
@@ -36,22 +37,18 @@ public abstract class Produto {
         this.preco = preco;
         this.categoria = categoria;
         this.situacao = situacao;
-        this.adicionarProdutosLista();
+        produtoRepository = new ProdutoRepositoryImpl();
     }
 
-    private void adicionarProdutosLista() {
-        produtos.put(this.getId(), this);
-    }
-
-    public static void imprimeProdutosLista() {
-        for (Map.Entry<UUID, Produto> produto : produtos.entrySet()) {
-            UUID id = produto.getKey();
-            Produto oProduto = produto.getValue();
-            System.out.println(Funcionario.separador() + "Nome:" + oProduto.getNome() + "\n" +
-                    "ID Produto: " + id + "\n" +
-                    "Descrição do Produto: " + oProduto.getDescricao());
-        }
-    }
+//    public static void imprimeProdutosLista() {
+//        for (Map.Entry<UUID, Produto> produto : produtos.entrySet()) {
+//            UUID id = produto.getKey();
+//            Produto oProduto = produto.getValue();
+//            System.out.println(Funcionario.separador() + "Nome:" + oProduto.getNome() + "\n" +
+//                    "ID Produto: " + id + "\n" +
+//                    "Descrição do Produto: " + oProduto.getDescricao());
+//        }
+//    }
 
     public UUID getId() {
         return id;
@@ -111,15 +108,15 @@ public abstract class Produto {
 
     public void cadastrarProduto(Produto produto) throws GerenciadorFuncionariosException {
         if (verificarProdutoExiste(produto)) {
-            produtos.put(produto.getId(), produto);
+            produtoRepository.gravar(produto);
             System.out.printf(Produto.separador() + "Produto \n Nome: %s \n Descricao: %s \n Codigo: %s \n Preço: %s \n Categoria: %s \n Cadastrado com sucesso" + Funcionario.separador(), produto.getNome(), produto.getDescricao(), produto.getCodigo(), produto.getPreco(), produto.getCategoria());
         } else {
-            throw new GerenciadorFuncionariosException("Erro teste");
+            throw new GerenciadorFuncionariosException("Produto já cadastrado");
         }
     }
 
     private boolean verificarProdutoExiste(Produto produto) {
-        return produtos.entrySet().stream().anyMatch(Produto -> Produto.getValue().codigo == produto.getCodigo());
+        return Objects.isNull(produtoRepository.buscarProduto(produto.getId()));
     }
 
     public static String separador() {
@@ -131,7 +128,4 @@ public abstract class Produto {
         return this.nome;
     }
 
-    public static Map<UUID, Produto> getProdutos() {
-        return produtos;
-    }
 }

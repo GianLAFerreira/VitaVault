@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class CadastrarContaView extends javax.swing.JFrame {
+public class CadastroContaView extends javax.swing.JFrame {
 
-    public CadastrarContaView() {
+    public CadastroContaView() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 

@@ -5,12 +5,11 @@
 package br.com.vitavault.view;
 
 import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.ItemEstoque;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
+import java.awt.event.ActionListener;
 
 /**
  * @author lucas
@@ -21,7 +20,7 @@ public class ConsultaMovimentacaoView extends javax.swing.JFrame {
     /**
      * Creates new form HomeConsulta
      */
-    public ConsultaMovimentacaoView(Estoque estoque) {
+    public ConsultaMovimentacaoView() {
         initComponents();
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -29,11 +28,15 @@ public class ConsultaMovimentacaoView extends javax.swing.JFrame {
         int y = (screenSize.height - this.getSize().height) / 2;
         this.setLocation(x, y);
 
-        estoqueService = estoque;
+        //estoqueService = estoque;
     }
 
-    public void exibe() {
-        setVisible(true);
+    public void adicionarAcaoConsultarMovimentacao(ActionListener acao) {
+        botaoConsultar.addActionListener(acao);
+    }
+
+    public JTable getTabela() {
+        return tabela;
     }
 
     /**
@@ -96,11 +99,6 @@ public class ConsultaMovimentacaoView extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tabela);
 
         botaoConsultar.setText("Consultar");
-        botaoConsultar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botao_consultarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -146,22 +144,10 @@ public class ConsultaMovimentacaoView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void botao_consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        atualizarTabelaMovimentacoesEstoque(tabela);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoConsultar;
@@ -172,22 +158,5 @@ public class ConsultaMovimentacaoView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabela;
     // End of variables declaration//GEN-END:variables
-
-    private void atualizarTabelaMovimentacoesEstoque(JTable tabela) {
-        DefaultTableModel tableModel = (DefaultTableModel) tabela.getModel();
-        tableModel.setRowCount(0); // Limpar as linhas existentes
-
-        List<ItemEstoque> produtos = estoqueService.getItensList();
-
-        for (ItemEstoque movimentacao : produtos) {
-            Object[] rowData = {
-                    movimentacao.getProduto(),
-                    movimentacao.getQuantidade(),
-                    movimentacao.getData()
-            };
-
-            tableModel.addRow(rowData);
-        }
-    }
 
 }

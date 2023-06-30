@@ -1,5 +1,9 @@
 package br.com.vitavault.domain;
 
+import br.com.vitavault.dao.ItemEstoqueRepository;
+import br.com.vitavault.dao.MovimentacaoEstoqueRepository;
+import br.com.vitavault.dao.impl.ItemEstoqueRepositoryImpl;
+import br.com.vitavault.dao.impl.MovimentacaoEstoqueRepositoryImpl;
 import br.com.vitavault.exceptions.EstoqueException;
 import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
 import br.com.vitavault.model.Estoque;
@@ -18,10 +22,12 @@ public class MovimentacaoEstoque {
     private EnumTipoMovimentacao tipoMovimentacao;
     private Long quantidade;
     private final Estoque estoque;
+    private ItemEstoqueRepository itemEstoqueRepository;
+    private MovimentacaoEstoqueRepository movimentacaoEstoqueRepository;
 
-    private MovimentacaoEstoque(ItemEstoque item, Funcionario funcionario, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
+    private MovimentacaoEstoque(UUID id, ItemEstoque item, Funcionario funcionario, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
         this.estoque = estoque;
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.item = item;
         this.funcionario = funcionario;
         this.dataMovimentacao = dataMovimentacao;
@@ -29,15 +35,21 @@ public class MovimentacaoEstoque {
         this.quantidade = quantidade;
     }
 
+    public MovimentacaoEstoque(UUID id, Produto produto, Funcionario funcionario, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
+        this(id, new ItemEstoque(produto.getId(), produto, estoque, dataMovimentacao, quantidade, tipoMovimentacao), funcionario, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
+        itemEstoqueRepository = new ItemEstoqueRepositoryImpl();
+        movimentacaoEstoqueRepository = new MovimentacaoEstoqueRepositoryImpl();
+    }
+
     public MovimentacaoEstoque(Produto produto, Funcionario funcionario, LocalDate dataMovimentacao, EnumTipoMovimentacao tipoMovimentacao, Long quantidade, Estoque estoque) {
-        this(new ItemEstoque(produto.getId(), produto, estoque, dataMovimentacao, 0L, tipoMovimentacao), funcionario, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
+        this(null, new ItemEstoque(produto, estoque, dataMovimentacao, 0L, tipoMovimentacao), funcionario, dataMovimentacao, tipoMovimentacao, quantidade, estoque);
+        itemEstoqueRepository = new ItemEstoqueRepositoryImpl();
+        movimentacaoEstoqueRepository = new MovimentacaoEstoqueRepositoryImpl();
     }
 
     public void movimentarEstoque(ItemEstoque itemEstoque, Long quantidade, EnumTipoMovimentacao tipoMovimentacao) throws MovimentacaoEstoqueException, EstoqueException {
         if (tipoMovimentacao.equals(EnumTipoMovimentacao.ENTRADA)) {
             movimentarEntrada(itemEstoque, quantidade);
-            System.out.println("Id do item estoque " + itemEstoque.getId());
-            System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
         } else {
             movimentarSaida(itemEstoque, quantidade);
             System.out.println("Id do item estoque " + itemEstoque.getId());
@@ -55,6 +67,7 @@ public class MovimentacaoEstoque {
     private void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) throws MovimentacaoEstoqueException, EstoqueException {
         itemEstoque = estoque.buscarItem(itemEstoque);
 
+        movimentacaoEstoqueRepository.buscarMovimentacoes(itemEstoque.getId());
 
         Long saldoAnterior = calcularSaldoAnterior(itemEstoque, this.getDataMovimentacao());
 
@@ -91,7 +104,7 @@ public class MovimentacaoEstoque {
     }
 
     private void aumentarQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) {
-        itemEstoque.setQuantidade(itemEstoque.getQuantidade() + quantidadeAumentar);
+        itemEstoqueRepository.alterarSaldo(itemEstoque.getId(), itemEstoque.getQuantidade() + quantidadeAumentar);
     }
 
     private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) throws MovimentacaoEstoqueException, EstoqueException {
@@ -120,5 +133,13 @@ public class MovimentacaoEstoque {
 
     public Funcionario getFuncionario() {
         return funcionario;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setItem(ItemEstoque item) {
+        this.item = item;
     }
 }

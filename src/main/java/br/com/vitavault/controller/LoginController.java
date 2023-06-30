@@ -3,38 +3,26 @@ package br.com.vitavault.controller;
 import br.com.vitavault.model.Estoque;
 import br.com.vitavault.validation.CadastroContaValidation;
 import br.com.vitavault.validation.impl.CadastroContaValidationImpl;
-import br.com.vitavault.view.CadastrarContaView;
+import br.com.vitavault.view.CadastroContaView;
 import br.com.vitavault.view.HomePageView;
 import br.com.vitavault.view.LoginView;
 
 import java.util.HashSet;
 import java.util.List;
 
-public class TelaLoginController {
+public class LoginController {
     private LoginView loginView;
-    private CadastrarContaView cadastrarContaView;
+    private CadastroContaView cadastroContaView;
     private CadastroContaController cadastroContaController;
     private CadastroContaValidation cadastroContaValidation;
     private Estoque estoque;
-    private TelaHomeController telaHomeController;
+    private HomePageController homePageController;
 
-    public Estoque getEstoque() {
-        return estoque;
-    }
-
-    public String getCpf() {
-        return loginView.getCpf();
-    }
-
-    public String getSenha() {
-        return loginView.getSenha();
-    }
-
-    public TelaLoginController() {
+    public LoginController() {
         this.loginView = new LoginView();
-        this.cadastrarContaView = new CadastrarContaView();
-        this.cadastroContaController = new CadastroContaController(cadastrarContaView);
-        this.telaHomeController = new TelaHomeController(new HomePageView(criarEstoque()), this);
+        this.cadastroContaView = new CadastroContaView();
+        this.cadastroContaController = new CadastroContaController(cadastroContaView);
+        this.homePageController = new HomePageController(new HomePageView(criarEstoque()), this);
         this.cadastroContaValidation = new CadastroContaValidationImpl();
         inicializarBotoesLogin();
     }
@@ -51,8 +39,7 @@ public class TelaLoginController {
     private void exibeTelaHome() {
         if (Boolean.TRUE.equals(validarLogin(getCpf(), getSenha()))) {
             loginView.dispose();
-            loginView.resetarCamposLogin();
-            telaHomeController.exibirTela();
+            homePageController.exibirTela();
         }
     }
 
@@ -60,7 +47,7 @@ public class TelaLoginController {
         List<String> mensagens = cadastroContaValidation.validar(cpf, senha);
 
         if (!mensagens.isEmpty()) {
-            cadastrarContaView.alertaMensagens(mensagens);
+            cadastroContaView.alertaMensagens(mensagens);
             return false;
         }
         return true;
@@ -77,8 +64,20 @@ public class TelaLoginController {
     }
 
     public static void main(String[] args) {
-        TelaLoginController tela = new TelaLoginController();
+        LoginController tela = new LoginController();
         tela.exibe();
+    }
+
+    public Estoque getEstoque() {
+        return estoque;
+    }
+
+    public String getCpf() {
+        return loginView.getCpf();
+    }
+
+    public String getSenha() {
+        return loginView.getSenha();
     }
 }
 
