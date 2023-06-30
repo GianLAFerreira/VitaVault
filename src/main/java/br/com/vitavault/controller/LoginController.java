@@ -63,11 +63,6 @@ public class LoginController {
         loginView.exibe();
     }
 
-    public static void main(String[] args) {
-        LoginController tela = new LoginController();
-        tela.exibe();
-    }
-
     public Estoque getEstoque() {
         return estoque;
     }

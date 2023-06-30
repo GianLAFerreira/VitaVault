@@ -100,7 +100,7 @@ public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRep
         String sql = "SELECT * FROM movimentacaoestoque where item = ?";
 
         try (Connection conn = conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setObject(1, id);
 

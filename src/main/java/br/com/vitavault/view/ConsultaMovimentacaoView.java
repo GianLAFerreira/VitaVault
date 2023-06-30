@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package br.com.vitavault.view;
 
 import br.com.vitavault.model.Estoque;
@@ -11,9 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-/**
- * @author lucas
- */
 public class ConsultaMovimentacaoView extends javax.swing.JFrame {
     private Estoque estoqueService;
 

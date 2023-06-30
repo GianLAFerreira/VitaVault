@@ -91,6 +91,7 @@ public class Estoque {
 
     public List<MovimentacaoEstoque> getMovimentacoes() {
         List<MovimentacaoEstoque> movimentacaoEstoqueList = new ArrayList<>();
+        
         for (ItemEstoque item : itens) {
             for (MovimentacaoEstoque movimentacaoEstoque : item.getMovimentacao()) {
                 movimentacaoEstoqueList.add(movimentacaoEstoque);
