@@ -1,8 +1,6 @@
 package br.com.vitavault.model;
 
 import br.com.vitavault.domain.MovimentacaoEstoque;
-import br.com.vitavault.exceptions.EstoqueException;
-import br.com.vitavault.view.EstoquePrinter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,32 +22,11 @@ public class Estoque {
         this.id = id;
     }
 
-    public void removerProduto(ItemEstoque itemEstoque) throws EstoqueException {
-        boolean itemRemovido = itens.remove(itemEstoque);
-
-        if (!itemRemovido) {
-            throw new EstoqueException("O item do produto " + itemEstoque.getProduto().getNome() + " não foi encontrado no estoque.");
-        }
-    }
-
     public void adicionarProdutoNoEstoque(ItemEstoque item) {
         if (itens == null) {
             itens = new HashSet<>();
         }
         itens.add(item);
-    }
-
-    public void listar() {
-        if (!itens.isEmpty())
-            listarProdutosEstoque();
-        else
-            System.out.println("Não existem produtos para serem listados.");
-    }
-
-    private void listarProdutosEstoque() {
-        for (ItemEstoque item : itens) {
-            EstoquePrinter.imprimirProduto(item);
-        }
     }
 
     public ItemEstoque vincularEstoqueAoItem(ItemEstoque itemEstoque) {
@@ -64,22 +41,6 @@ public class Estoque {
         }
     }
 
-    public ItemEstoque buscarItem(ItemEstoque itemEstoque) throws EstoqueException {
-        for (ItemEstoque item : itens) {
-            if (item.getId().equals(itemEstoque.getProduto().getId())) {
-                System.out.println("O item existe no estoque");
-                return item;
-            } else {
-                throw new EstoqueException("O item: " + itemEstoque.getProduto().getNome() + " não existe no estoque");
-            }
-        }
-        return null;
-    }
-
-    public Set<ItemEstoque> getItens() {
-        return itens;
-    }
-
     public List<ItemEstoque> getItensList() {
         List<ItemEstoque> itemEstoques = new ArrayList<>();
         for (ItemEstoque item : itens) {
@@ -91,7 +52,7 @@ public class Estoque {
 
     public List<MovimentacaoEstoque> getMovimentacoes() {
         List<MovimentacaoEstoque> movimentacaoEstoqueList = new ArrayList<>();
-        
+
         for (ItemEstoque item : itens) {
             for (MovimentacaoEstoque movimentacaoEstoque : item.getMovimentacao()) {
                 movimentacaoEstoqueList.add(movimentacaoEstoque);

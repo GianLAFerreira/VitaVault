@@ -23,6 +23,11 @@ public class LoginView extends javax.swing.JFrame {
         estoque = new Estoque(new HashSet<>());
     }
 
+    public void resetarCampos() {
+        campo_cpf.setText("");
+        campo_senha.setText("");
+    }
+
     public void adicionarAcaoBotaoCadastrarUsuario(ActionListener acao) {
         btnCriarConta.addActionListener(acao);
     }

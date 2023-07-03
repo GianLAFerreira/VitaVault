@@ -37,6 +37,7 @@ public class FuncionarioRepositoryImpl implements FuncionarioRepository {
         try {
             stmt = connection.createStatement();
             stmt.execute(sqlCreate);
+            System.out.println("Criando a tabela Funcionario");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {

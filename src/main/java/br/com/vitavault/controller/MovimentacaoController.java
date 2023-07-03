@@ -12,7 +12,6 @@ import br.com.vitavault.domain.MovimentacaoEstoque;
 import br.com.vitavault.exceptions.EstoqueException;
 import br.com.vitavault.exceptions.MovimentacaoEstoqueException;
 import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.Funcionario;
 import br.com.vitavault.model.ItemEstoque;
 import br.com.vitavault.model.Produto;
 import br.com.vitavault.validation.MovimentacaoEstoqueValidation;
@@ -32,7 +31,6 @@ public class MovimentacaoController {
     private MovimentacaoView movimentacaoView;
     private EstoqueRepository estoqueRepository;
     private MovimentacaoEstoqueValidation movimentacaoEstoqueValidation;
-    private Funcionario funcionarioLogado;
     private ItemEstoqueRepository itemEstoqueRepository;
     private MovimentacaoEstoqueRepository movimentacaoEstoqueRepository;
     private HomePageController homePageController;
@@ -88,6 +86,7 @@ public class MovimentacaoController {
         try {
             movimentacaoEstoque.movimentarEstoque(movimentacaoEstoque.getItem(), movimentacaoEstoque.getQuantidade(), movimentacaoEstoque.getTipoMovimentacao());
             JOptionPane.showMessageDialog(movimentacaoView, "Estoque movimentado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            homePageController.atualizarTabelaMovimentacoesEstoque();
             movimentacaoView.dispose();
         } catch (MovimentacaoEstoqueException | EstoqueException ex) {
             JOptionPane.showMessageDialog(movimentacaoView, "Erro ao movimentar o estoque: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -105,6 +104,10 @@ public class MovimentacaoController {
 
     public MovimentacaoView retornaMovimentacaoView() {
         return movimentacaoView;
+    }
+
+    public List<MovimentacaoEstoque> getMovimentacoes() {
+        return movimentacaoEstoqueRepository.buscarMovimentacoes();
     }
 
 }

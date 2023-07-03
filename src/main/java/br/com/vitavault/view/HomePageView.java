@@ -1,7 +1,6 @@
 package br.com.vitavault.view;
 
 import br.com.vitavault.model.Estoque;
-import br.com.vitavault.model.Funcionario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,14 +11,11 @@ import java.awt.event.ActionListener;
  * @author lucas
  */
 public class HomePageView extends javax.swing.JFrame {
-    private Funcionario funcionarioLogado;
-    private Estoque estoqueService;
 
     /**
      * Creates new form HomePage
      */
     public HomePageView(Estoque estoque) {
-        estoqueService = estoque;
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -43,10 +39,6 @@ public class HomePageView extends javax.swing.JFrame {
 
     public void adicionaAcaoBotaoCadastroProduto(ActionListener acao) {
         btnCadastrarProduto.addActionListener(acao);
-    }
-
-    public void adicionaAcaoBotaoAtualizarMovimentacao(ActionListener acao) {
-        btnAtualizarMovimentacao.addActionListener(acao);
     }
 
     public void adicionaAcaoBotaoSair(ActionListener acao) {
@@ -82,7 +74,6 @@ public class HomePageView extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
         uppanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        btnAtualizarMovimentacao = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
 
@@ -233,26 +224,18 @@ public class HomePageView extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Últimas Movimentações de Estoque");
 
-        btnAtualizarMovimentacao.setText("Atualizar Movimentação");
-
         javax.swing.GroupLayout uppanelLayout = new javax.swing.GroupLayout(uppanel);
         uppanel.setLayout(uppanelLayout);
         uppanelLayout.setHorizontalGroup(
                 uppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(uppanelLayout.createSequentialGroup()
-                                .addGap(173, 173, 173)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uppanelLayout.createSequentialGroup()
+                                .addContainerGap(239, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                                .addComponent(btnAtualizarMovimentacao)
-                                .addGap(55, 55, 55))
+                                .addGap(230, 230, 230))
         );
         uppanelLayout.setVerticalGroup(
                 uppanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, uppanelLayout.createSequentialGroup()
-                                .addContainerGap(30, Short.MAX_VALUE)
-                                .addComponent(btnAtualizarMovimentacao)
-                                .addContainerGap())
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
         );
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
@@ -320,7 +303,6 @@ public class HomePageView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.k33ptoo.App app1;
     private javax.swing.JPanel background;
-    private javax.swing.JButton btnAtualizarMovimentacao;
     private javax.swing.JButton btnCadastrarProduto;
     private javax.swing.JButton btnConsultarEstoque;
     private javax.swing.JButton btnMovimentarEstoque;

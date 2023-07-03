@@ -3,10 +3,12 @@ package br.com.vitavault.dao.impl;
 import br.com.vitavault.dao.ConexaoBD;
 import br.com.vitavault.dao.EstoqueRepository;
 import br.com.vitavault.dao.FuncionarioRepository;
+import br.com.vitavault.dao.ItemEstoqueRepository;
 import br.com.vitavault.dao.MovimentacaoEstoqueRepository;
 import br.com.vitavault.dao.ProdutoRepository;
 import br.com.vitavault.domain.EnumTipoMovimentacao;
 import br.com.vitavault.domain.MovimentacaoEstoque;
+import br.com.vitavault.model.ItemEstoque;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -27,11 +29,14 @@ public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRep
     private FuncionarioRepository funcionarioRepository;
     private EstoqueRepository estoqueRepository;
 
+    private ItemEstoqueRepository itemEstoqueRepository;
+
     public MovimentacaoEstoqueRepositoryImpl() {
         createTable();
         produtoRepository = new ProdutoRepositoryImpl();
         funcionarioRepository = new FuncionarioRepositoryImpl();
         estoqueRepository = new EstoqueRepositoryImpl();
+        itemEstoqueRepository = new ItemEstoqueRepositoryImpl();
     }
 
     @Override
@@ -51,6 +56,7 @@ public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRep
         try {
             stmt = connection.createStatement();
             stmt.execute(sqlCreate);
+            System.out.println("Criando a tabela MovimentacaoEstoque");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {
@@ -100,7 +106,7 @@ public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRep
         String sql = "SELECT * FROM movimentacaoestoque where item = ?";
 
         try (Connection conn = conectar();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setObject(1, id);
 
@@ -114,10 +120,57 @@ public class MovimentacaoEstoqueRepositoryImpl implements MovimentacaoEstoqueRep
                 EnumTipoMovimentacao tipoMovimentacao = EnumTipoMovimentacao.valueOf(rs.getString("tipoMovimentacao"));
                 Long quantidade = rs.getLong("quantidade");
 
+                ItemEstoque itemEstoque = itemEstoqueRepository.buscarItem(item);
 
                 movimentacaoEstoque = new MovimentacaoEstoque(
                         idcoluna,
-                        produtoRepository.buscarProduto(item)
+                        produtoRepository.buscarProduto(itemEstoque.getProduto().getId())
+                        , funcionarioRepository.buscarFuncionario(funcionario)
+                        , dataMovimentacao
+                        , tipoMovimentacao
+                        , quantidade
+                        , estoqueRepository.buscarEstoque());
+
+
+                movimentacaoEstoqueList.add(movimentacaoEstoque);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+            ConexaoBD.descontecar();
+        }
+        System.out.println("Produtos encontrado com sucesso");
+        return movimentacaoEstoqueList;
+    }
+
+    @Override
+    public List<MovimentacaoEstoque> buscarMovimentacoes() {
+        List<MovimentacaoEstoque> movimentacaoEstoqueList = new ArrayList<>();
+        MovimentacaoEstoque movimentacaoEstoque = null;
+
+        String sql = "SELECT * FROM movimentacaoestoque";
+
+        try (Connection conn = conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                UUID idcoluna = UUID.fromString(rs.getString("id"));
+                UUID item = UUID.fromString(rs.getString("item"));
+                UUID funcionario = UUID.fromString(rs.getString("funcionario"));
+                LocalDate dataMovimentacao = rs.getDate("dataMovimentacao").toLocalDate();
+                EnumTipoMovimentacao tipoMovimentacao = EnumTipoMovimentacao.valueOf(rs.getString("tipoMovimentacao"));
+                Long quantidade = rs.getLong("quantidade");
+
+                ItemEstoque itemEstoque = itemEstoqueRepository.buscarItem(item);
+
+                movimentacaoEstoque = new MovimentacaoEstoque(
+                        idcoluna,
+                        produtoRepository.buscarProduto(itemEstoque.getProduto().getId())
                         , funcionarioRepository.buscarFuncionario(funcionario)
                         , dataMovimentacao
                         , tipoMovimentacao

@@ -12,6 +12,7 @@ import br.com.vitavault.model.ItemEstoque;
 import br.com.vitavault.model.Produto;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class MovimentacaoEstoque {
@@ -52,8 +53,6 @@ public class MovimentacaoEstoque {
             movimentarEntrada(itemEstoque, quantidade);
         } else {
             movimentarSaida(itemEstoque, quantidade);
-            System.out.println("Id do item estoque " + itemEstoque.getId());
-            System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
         }
     }
 
@@ -65,18 +64,12 @@ public class MovimentacaoEstoque {
     }
 
     private void movimentarSaida(ItemEstoque itemEstoque, Long quantidade) throws MovimentacaoEstoqueException, EstoqueException {
-        itemEstoque = estoque.buscarItem(itemEstoque);
-
-        movimentacaoEstoqueRepository.buscarMovimentacoes(itemEstoque.getId());
-
         Long saldoAnterior = calcularSaldoAnterior(itemEstoque, this.getDataMovimentacao());
 
         vincularMovimentacaoAoItem(itemEstoque);
 
         if (saldoAnterior >= quantidade) {
             diminuirQuantidadeItemEstoque(itemEstoque, quantidade);
-            System.out.println("Id do item estoque " + itemEstoque.getId());
-            System.out.println("Saldo atual: " + itemEstoque.getQuantidade());
         } else {
             throw new MovimentacaoEstoqueException("Saldo insuficiente");
         }
@@ -86,7 +79,9 @@ public class MovimentacaoEstoque {
         Long entradas = 0L;
         Long saidas = 0L;
 
-        for (MovimentacaoEstoque movimentacao : itemEstoque.getMovimentacao()) {
+        List<MovimentacaoEstoque> movimentacaoEstoqueList = movimentacaoEstoqueRepository.buscarMovimentacoes(itemEstoque.getId());
+
+        for (MovimentacaoEstoque movimentacao : movimentacaoEstoqueList) {
             if (movimentacao.getDataMovimentacao().isBefore(dataMovimentacao) || movimentacao.getDataMovimentacao().isEqual(dataMovimentacao)) {
                 if (movimentacao.getTipoMovimentacao() == EnumTipoMovimentacao.ENTRADA) {
                     entradas += movimentacao.getQuantidade();
@@ -109,7 +104,7 @@ public class MovimentacaoEstoque {
 
     private void diminuirQuantidadeItemEstoque(ItemEstoque itemEstoque, Long quantidadeAumentar) throws MovimentacaoEstoqueException, EstoqueException {
         if (itemEstoque.getQuantidade().compareTo(quantidadeAumentar) >= 0) {
-            itemEstoque.setQuantidade(itemEstoque.getQuantidade() - quantidadeAumentar);
+            itemEstoqueRepository.alterarSaldo(itemEstoque.getId(), itemEstoque.getQuantidade() - quantidadeAumentar);
         } else {
             throw new MovimentacaoEstoqueException("Saldo insuficiente");
         }
