@@ -43,6 +43,10 @@ public class ItemEstoque {
     public Produto getProduto() {
         return produto;
     }
+    
+    public String getNomeProduto() {
+        return produto.getNome();
+    }
 
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
