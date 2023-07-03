@@ -1,7 +1,5 @@
 package br.com.vitavault.controller;
 
-import br.com.vitavault.dao.ProdutoRepository;
-import br.com.vitavault.dao.impl.ProdutoRepositoryImpl;
 import br.com.vitavault.exceptions.GerenciadorFuncionariosException;
 import br.com.vitavault.model.Produto;
 import br.com.vitavault.model.ProdutoDepreciavel;
@@ -21,12 +19,10 @@ import java.util.logging.Logger;
 public class CadastroProdutoController {
     private CadastroProdutoView cadastroProdutoView;
     private CadastroProdutoValidation cadastroProdutoValidation;
-    private ProdutoRepository produtoRepository;
 
     public CadastroProdutoController() {
         cadastroProdutoView = new CadastroProdutoView();
         cadastroProdutoValidation = new CadastroProdutoValidationImpl();
-        produtoRepository = new ProdutoRepositoryImpl();
         inicializarBotoes();
     }
 

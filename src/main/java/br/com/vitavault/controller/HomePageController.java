@@ -17,9 +17,8 @@ public class HomePageController {
     private HomePageView homePageView;
     private LoginController loginController;
     private FuncionarioRepository funcionarioRepository;
-    private Funcionario funcionario;
     private CadastroProdutoController cadastroProdutoController;
-    private ConsultaMovimentacaoController consultaMovimentacaoController;
+    private ConsultaEstoqueController consultaEstoqueController;
     private MovimentacaoController movimentacaoController;
     private ProdutoRepository produtoRepository;
 
@@ -28,7 +27,7 @@ public class HomePageController {
         this.loginController = loginController;
         this.funcionarioRepository = new FuncionarioRepositoryImpl();
         cadastroProdutoController = new CadastroProdutoController();
-        consultaMovimentacaoController = new ConsultaMovimentacaoController();
+        consultaEstoqueController = new ConsultaEstoqueController();
         movimentacaoController = new MovimentacaoController(this);
         produtoRepository = new ProdutoRepositoryImpl();
         inicializarBotoes();
@@ -38,12 +37,11 @@ public class HomePageController {
         homePageView.adicionaAcaoBotaoMovimentaEstoque((a) -> exibeTelaConsultaEstoque());
         homePageView.adicionarAcaoBotaoConsultaEstoque((a) -> exibeTelaMovimentaoEstoque());
         homePageView.adicionaAcaoBotaoCadastroProduto((a) -> exibeTelaCadastroProduto());
-        homePageView.adicionaAcaoBotaoAtualizarMovimentacao((a) -> atualizarTabelaMovimentacoesEstoque());
         homePageView.adicionaAcaoBotaoSair((a) -> sairTelaHome());
     }
 
     private void exibeTelaConsultaEstoque() {
-        consultaMovimentacaoController.exibe();
+        consultaEstoqueController.exibe();
     }
 
     private void exibeTelaMovimentaoEstoque() {
@@ -58,15 +56,17 @@ public class HomePageController {
 
     private void sairTelaHome() {
         homePageView.dispose();
+        loginController.limparCampos();
         loginController.exibe();
     }
 
-    private void atualizarTabelaMovimentacoesEstoque() {
+    public void atualizarTabelaMovimentacoesEstoque() {
         JTable tabela = homePageView.getTabela();
         DefaultTableModel tableModel = (DefaultTableModel) tabela.getModel();
         tableModel.setRowCount(0); // Limpar as linhas existentes
 
-        List<MovimentacaoEstoque> produtos = loginController.getEstoque().getMovimentacoes();
+
+        List<MovimentacaoEstoque> produtos = movimentacaoController.getMovimentacoes();
 
         for (MovimentacaoEstoque movimentacao : produtos) {
             Object[] rowData = {
@@ -81,6 +81,7 @@ public class HomePageController {
     }
 
     public void exibirTela() {
+        atualizarTabelaMovimentacoesEstoque();
         homePageView.exibe();
     }
 

@@ -59,6 +59,10 @@ public class LoginController {
         return oEstoque;
     }
 
+    public void limparCampos() {
+        loginView.resetarCampos();
+    }
+
     public void exibe() {
         loginView.exibe();
     }

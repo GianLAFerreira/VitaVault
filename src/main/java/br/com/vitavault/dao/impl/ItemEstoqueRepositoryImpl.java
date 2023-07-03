@@ -49,6 +49,7 @@ public class ItemEstoqueRepositoryImpl implements ItemEstoqueRepository {
         try {
             stmt = connection.createStatement();
             stmt.execute(sqlCreate);
+            System.out.println("Criando a tabela ItemEstoque");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } finally {

@@ -11,4 +11,6 @@ public interface MovimentacaoEstoqueRepository {
     boolean gravar(MovimentacaoEstoque movimentacaoEstoque);
 
     List<MovimentacaoEstoque> buscarMovimentacoes(UUID id);
+
+    List<MovimentacaoEstoque> buscarMovimentacoes();
 }

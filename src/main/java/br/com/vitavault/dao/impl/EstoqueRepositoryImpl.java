@@ -1,32 +1,32 @@
 package br.com.vitavault.dao.impl;
 
 import br.com.vitavault.dao.ConexaoBD;
-import static br.com.vitavault.dao.ConexaoBD.conectar;
 import br.com.vitavault.dao.EstoqueRepository;
 import br.com.vitavault.dao.ProdutoRepository;
 import br.com.vitavault.domain.EnumTipoMovimentacao;
 import br.com.vitavault.model.Estoque;
+import br.com.vitavault.model.ItemEstoque;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import br.com.vitavault.model.ItemEstoque;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import static br.com.vitavault.dao.ConexaoBD.conectar;
 
 public class EstoqueRepositoryImpl implements EstoqueRepository {
     private ProdutoRepository produtoRepository;
+
     public EstoqueRepositoryImpl() {
         createTable();
         produtoRepository = new ProdutoRepositoryImpl();
-        System.out.println("cria tabela");
     }
 
     @Override
@@ -39,6 +39,7 @@ public class EstoqueRepositoryImpl implements EstoqueRepository {
         try (Connection conn = conectar();
              PreparedStatement pstmt = conn.prepareStatement(sqlCreate, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.executeUpdate();
+            System.out.println("Criando a tabela Estoque");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -46,7 +47,7 @@ public class EstoqueRepositoryImpl implements EstoqueRepository {
             ConexaoBD.descontecar();
         }
         Estoque estoque = buscarEstoque();
-        
+
         if (Objects.isNull(estoque)) {
             gravar();
         }
@@ -98,9 +99,9 @@ public class EstoqueRepositoryImpl implements EstoqueRepository {
         String sql = "SELECT * FROM itemestoque where estoque = ?";
         List<ItemEstoque> itemEstoqueList = new ArrayList<>();
         ItemEstoque itemEstoque = null;
-        
+
         try (Connection conn = conectar();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setObject(1, id);
 
@@ -112,15 +113,15 @@ public class EstoqueRepositoryImpl implements EstoqueRepository {
                 LocalDate data = rs.getDate("data").toLocalDate();
                 Long quantidade = rs.getLong("quantidade");
                 EnumTipoMovimentacao tipoMovimentacao = EnumTipoMovimentacao.valueOf(rs.getString("tipoMovimentacao"));
-                
-                itemEstoque = new ItemEstoque (
-                        idcoluna, 
+
+                itemEstoque = new ItemEstoque(
+                        idcoluna,
                         produtoRepository.buscarProduto(item),
                         buscarEstoque(),
                         data,
                         quantidade,
                         tipoMovimentacao);
-                
+
                 itemEstoqueList.add(itemEstoque);
             }
 
@@ -133,5 +134,5 @@ public class EstoqueRepositoryImpl implements EstoqueRepository {
         System.out.println("Produtos encontrado com sucesso");
         return itemEstoqueList;
     }
-    
+
 }
