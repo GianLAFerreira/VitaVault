@@ -87,7 +87,7 @@ public class MovimentacaoController {
             movimentacaoEstoque.movimentarEstoque(movimentacaoEstoque.getItem(), movimentacaoEstoque.getQuantidade(), movimentacaoEstoque.getTipoMovimentacao());
             JOptionPane.showMessageDialog(movimentacaoView, "Estoque movimentado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             homePageController.atualizarTabelaMovimentacoesEstoque();
-            movimentacaoView.dispose();
+            movimentacaoView.resetarCampos();
         } catch (MovimentacaoEstoqueException | EstoqueException ex) {
             JOptionPane.showMessageDialog(movimentacaoView, "Erro ao movimentar o estoque: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(CadastroContaView.class.getName()).log(Level.SEVERE, null, ex);

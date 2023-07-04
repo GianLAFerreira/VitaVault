@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package br.com.vitavault.view;
 
 import br.com.vitavault.domain.EnumTipoMovimentacao;
@@ -14,14 +10,8 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.List;
 
-/**
- * @author lucas
- */
 public class MovimentacaoView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form HomeConsulta
-     */
     public MovimentacaoView() {
         initComponents();
 
@@ -69,6 +59,14 @@ public class MovimentacaoView extends javax.swing.JFrame {
 
     public void limparCampos() {
         campo_produto.removeAllItems();
+    }
+    
+    public void resetarCampos() {
+        campo_data.setText("");
+        campo_quantidade.setText("");
+        campo_motivo.setSelectedIndex(0);
+        campo_produto.setSelectedIndex(0);
+        campo_tipo_movimentacao.setSelectedIndex(0);
     }
 
     /**
