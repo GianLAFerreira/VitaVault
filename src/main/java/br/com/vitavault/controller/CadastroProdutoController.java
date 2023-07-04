@@ -1,5 +1,6 @@
 package br.com.vitavault.controller;
 
+import br.com.vitavault.Utils.Utils;
 import br.com.vitavault.exceptions.GerenciadorFuncionariosException;
 import br.com.vitavault.model.Produto;
 import br.com.vitavault.model.ProdutoDepreciavel;
@@ -37,6 +38,7 @@ public class CadastroProdutoController {
         String precoProduto = cadastroProdutoView.getPrecoProduto();
         String categoriaProduto = cadastroProdutoView.getCategoriaProduto();
         String dataValidadeProduto = cadastroProdutoView.getDataValidadeProduto();
+
 
         List<String> mensagens = cadastroProdutoValidation.validar(nomeProduto, descricaoProduto, codigoProduto, precoProduto, categoriaProduto);
 
